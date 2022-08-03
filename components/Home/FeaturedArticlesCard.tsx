@@ -11,7 +11,7 @@ const FeaturedArticlesCard: NextPage<ArticleType> = ({
   return (
     <div className="home__featured-articles">
       <div className="home__featured-articles-photo-container">
-        <Image src={backgroundImage} alt="" width={"295px"} height={"120%"} />
+        <Image src={backgroundImage} alt="" width={"345px"} height={"120%"} />
         <h1 className="home__featured-articles-headline">{headline}</h1>
       </div>
 
