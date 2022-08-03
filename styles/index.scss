@@ -1,0 +1,10 @@
+// Base style imports
+@import "./base/variables";
+@import "./base/base";
+
+// Page styles imports
+@import "./pages/home";
+
+// Component styles imports
+@import "./components/header";
+@import "./components/footer";
