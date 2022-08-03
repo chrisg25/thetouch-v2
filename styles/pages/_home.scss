@@ -16,6 +16,10 @@
     @media (max-width: 53.125em) {
       grid-template-columns: 1fr 1fr;
     }
+    @media (max-width: 50em) {
+      min-height: 140px;
+      margin-top: 50px;
+    }
   }
   &__featured-photo-container {
     position: relative;
@@ -71,7 +75,7 @@
     font-weight: $fw-regular;
   }
   &__featured-date-button-container {
-    margin-top: 120px;
+    height: 100px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -100,23 +104,29 @@
     display: grid;
     gap: 50px;
     padding-inline: 20px;
-    grid-auto-flow: column;
-    grid-auto-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    @media (max-width: 50em) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+    @media (max-width: 25em) {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
   }
   &__featured-articles {
-    height: 100%;
     background-color: $accent-clr;
     padding: 10px;
   }
   &__featured-articles-photo-container {
-    max-width: 295px;
+    max-width: 345px;
     height: 135px;
     img {
       object-fit: cover;
     }
   }
   &__featured-articles-headline {
-    font-size: 14px;
+    font-size: $fs-300;
     font-weight: $fw-bold;
     font-style: italic;
   }
@@ -129,7 +139,11 @@
     // styling for Link component
     a {
       font-weight: $fw-bold;
+      font-size: $fs-300;
       color: $primary-clr;
+    }
+    @media (max-width: 50em) {
+      margin-top: 32px;
     }
   }
   &__featured-articles-writer {
@@ -146,6 +160,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    @media (max-width: 50em) {
+      margin-top: 22px;
+      margin-bottom: 0px;
+    }
   }
   &__more-articles-button-icon {
     margin-top: 8px;
