@@ -1,3 +1,4 @@
+import React from "react";
 import { NextPage } from "next";
 import { ReactNode } from "react";
 import Footer from "./Footer";
