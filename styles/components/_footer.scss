@@ -1,0 +1,17 @@
+.footer {
+  height: 70px;
+  width: 100%;
+  padding-inline: 10px;
+  padding-bottom: 10px;
+  &__container {
+    height: 100%;
+    background-color: $primary-clr;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    color: $white-100;
+  }
+}

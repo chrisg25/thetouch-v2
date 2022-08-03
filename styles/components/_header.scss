@@ -1,0 +1,43 @@
+.header {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 35px;
+  padding-inline: 20px;
+  &__banner {
+    display: flex;
+    align-items: center;
+  }
+  &__logo-container {
+    width: 44px;
+    height: 44px;
+  }
+  &__banner-title {
+    font-size: $fs-400;
+    font-weight: $fw-bold;
+    margin-left: 14px;
+  }
+  &__current-path {
+    font-weight: $fw-light;
+  }
+  &__nav {
+    ul {
+      list-style: none;
+      display: flex;
+    }
+  }
+  &__nav-item {
+    font-weight: $fw-bold;
+    color: $primary-clr;
+    &:not(:nth-of-type(1)) {
+      margin-left: 23px;
+      font-weight: $fw-regular;
+      color: $black-500;
+    }
+  }
+  &__nav-link {
+    text-decoration: none;
+  }
+}
