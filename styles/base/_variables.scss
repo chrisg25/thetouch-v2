@@ -2,11 +2,11 @@
 
 $font-family: "Noto Sans", sans-serif;
 
-$fs-100: 8px;
-$fs-200: 12px;
-$fs-300: 14px;
-$fs-400: 18px;
-$fs-700: 36px;
+$fs-100: var(--fs-100);
+$fs-200: var(--fs-200);
+$fs-300: var(--fs-300);
+$fs-400: var(--fs-400);
+$fs-700: var(--fs-700);
 
 $fw-light: 200;
 $fw-regular: 400;
