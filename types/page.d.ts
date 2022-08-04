@@ -3,6 +3,8 @@ interface ArticleType {
   headline: string;
   writer: string;
   dateTime?: string;
+  id: string;
+  body: string;
 }
 
 export { ArticleType };
