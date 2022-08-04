@@ -1,18 +1,37 @@
 .articles {
   max-width: 1085px;
   margin-inline: auto;
-  min-height: 65.4vh;
+  min-height: 73.3vh;
   &__container {
     display: grid;
     padding-inline: 20px;
     grid-template-columns: repeat(3, 1fr);
     gap: 40px;
-    margin-top: 130px;
+    margin-top: 80px;
     @media (max-width: 50em) {
       grid-template-columns: repeat(2, 1fr);
     }
     @media (max-width: 25em) {
       grid-template-columns: 1fr;
     }
+  }
+  &__more-articles-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__more-articles-button-description {
+    text-transform: uppercase;
+    font-weight: $fw-bold;
+    color: $accent-clr;
+    font-size: $fs-300;
+  }
+  &__more-articles-button-icon {
+    transform: rotate(90deg);
   }
 }

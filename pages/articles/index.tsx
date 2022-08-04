@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import FeaturedArticlesCard from "../../components/Home/FeaturedArticlesCard";
 import { articles } from "../../data/articles";
 
@@ -15,6 +16,18 @@ const Articles = () => {
             key={id}
           />
         ))}
+      </div>
+      <div className="articles__more-articles-button">
+        <h1 className="articles__more-articles-button-description">
+          Load More
+        </h1>
+        <Image
+          src="/chevron-right-solid.svg"
+          width={30}
+          height={15}
+          alt="articles button"
+          className="articles__more-articles-button-icon"
+        />
       </div>
     </div>
   );
