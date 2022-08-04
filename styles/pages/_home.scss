@@ -53,6 +53,9 @@
       width: 253px;
       height: 10px;
       background-color: $accent-clr;
+      @media (max-width: 50em) {
+        width: 50%;
+      }
     }
     @media (max-width: 53.125em) {
       grid-column-start: 1;
@@ -75,10 +78,13 @@
     font-weight: $fw-regular;
   }
   &__featured-date-button-container {
-    height: 100px;
+    height: 155px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    @media (max-width: 50em) {
+      height: 100px;
+    }
   }
   &__featured-read-button {
     background-color: $primary-clr;
@@ -117,6 +123,9 @@
   &__featured-articles {
     background-color: $accent-clr;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   &__featured-articles-photo-container {
     max-width: 345px;
@@ -132,7 +141,7 @@
   }
   &__featured-articles-footer {
     margin-top: 62px;
-    height: 10px;
+
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
