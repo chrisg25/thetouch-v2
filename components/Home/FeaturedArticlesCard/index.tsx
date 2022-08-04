@@ -10,22 +10,8 @@ const FeaturedArticlesCard: NextPage<ArticleType> = ({
   headline,
   writer,
 }) => {
-  const [hasBackground, setHasBackground] = useState<boolean>(true);
-  const router = useRouter();
-  const pathName = router.pathname;
-  useEffect(() => {
-    if (pathName !== "/") {
-      setHasBackground(false);
-    }
-  }, [pathName]);
   return (
-    <div
-      className="home__featured-articles"
-      data-testid="article"
-      style={{
-        backgroundColor: `${!hasBackground ? "transparent" : "#f4ad53"}`,
-      }}
-    >
+    <div className="home__featured-articles" data-testid="article">
       <div className="home__featured-articles-photo-container">
         <Image src={backgroundImage} alt="" width={"345px"} height={"120%"} />
         <h1 className="home__featured-articles-headline" data-testid="headline">
