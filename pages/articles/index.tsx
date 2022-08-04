@@ -6,13 +6,13 @@ const Articles = () => {
   return (
     <div className="articles">
       <div className="articles__container">
-        {articles.map(({ backgroundImage, dateTime, writer, headline }) => (
+        {articles.map(({ backgroundImage, dateTime, writer, headline, id }) => (
           <FeaturedArticlesCard
             backgroundImage={backgroundImage}
             dateTime={dateTime}
             writer={writer}
             headline={headline}
-            key={headline}
+            key={id}
           />
         ))}
       </div>
