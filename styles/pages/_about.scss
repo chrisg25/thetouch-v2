@@ -1,0 +1,75 @@
+.about {
+  max-width: 1080px;
+  margin-inline: auto;
+  min-height: 82vh;
+  padding-inline: 30px;
+  &__description-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: $fw-bold;
+    margin-bottom: 45px;
+    margin-top: 90px;
+  }
+
+  &__description-content {
+    line-height: 36px;
+    text-align: justify;
+    text-indent: 60px;
+    font-size: $fs-400;
+    @media (max-width: 25em) {
+      line-height: 28px;
+    }
+  }
+
+  &__grid-title {
+    font-weight: $fw-bold;
+    font-size: 24px;
+    margin-top: 100px;
+    margin-bottom: 30px;
+    @media (max-width: 25em) {
+      margin-top: 50px;
+      text-align: center;
+    }
+  }
+
+  &__members-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(5, 1fr);
+    @media (max-width: 50em) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 25em) {
+      grid-template-columns: repeat(1, 1fr);
+      justify-items: center;
+      align-items: center;
+    }
+  }
+
+  &__member-image-container {
+    max-width: 200px;
+    border: 3px solid $primary-clr;
+    grid-auto-columns: 180px;
+    object-fit: cover;
+
+    @media (max-width: 25em) {
+      width: 180px;
+    }
+  }
+
+  &__member-name {
+    font-weight: $fw-bold;
+    font-size: $fs-300;
+    margin-top: 10px;
+    @media (max-width: 25em) {
+      width: 180px;
+    }
+  }
+
+  &__member-position {
+    font-size: $fs-300;
+    @media (max-width: 25em) {
+      width: 180px;
+    }
+  }
+}
