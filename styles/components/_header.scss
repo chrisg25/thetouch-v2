@@ -7,37 +7,83 @@
   padding-top: 35px;
   padding-inline: 20px;
   &__banner {
+    position: relative;
     display: flex;
     align-items: center;
   }
   &__logo-container {
+    position: relative;
     width: 44px;
     height: 44px;
+    z-index: 11;
   }
   &__banner-title {
     font-size: $fs-400;
     font-weight: $fw-bold;
     margin-left: 14px;
+    z-index: 11;
   }
   &__current-path {
     font-weight: $fw-light;
+    text-transform: capitalize;
   }
   &__nav {
     ul {
       list-style: none;
       display: flex;
+      @media (max-width: 37em) {
+        display: none;
+      }
     }
   }
   &__nav-item {
-    font-weight: $fw-bold;
-    color: $primary-clr;
+    font-size: $fs-400;
+    font-weight: $fw-regular;
+    color: $black-500;
     &:not(:nth-of-type(1)) {
       margin-left: 23px;
-      font-weight: $fw-regular;
-      color: $black-500;
     }
   }
-  &__nav-link {
-    text-decoration: none;
+  &__nav-item-active {
+    font-weight: $fw-bold;
+    color: $primary-clr;
+  }
+  &__mobile-nav {
+    position: absolute;
+    inset: 0;
+    background-color: rgba($color: $white-100, $alpha: 0.96);
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    padding-top: 150px;
+    ul {
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+      margin: auto;
+      align-items: center;
+      li {
+        font-size: 24px;
+        &:not(:nth-of-type(1)) {
+          margin-left: 0;
+          margin-top: 30px;
+        }
+      }
+    }
+    @media (min-width: 37em) {
+      display: none;
+    }
+  }
+  &__menu-icon-container {
+    @media (min-width: 37em) {
+      display: none;
+    }
+    z-index: 11;
+  }
+  &__menu-icon {
+    fill: $primary-clr;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
