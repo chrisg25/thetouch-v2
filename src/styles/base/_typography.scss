@@ -1,0 +1,13 @@
+:root {
+  --fs-100: 8px;
+  --fs-200: 12px;
+  --fs-300: 14px;
+  --fs-400: 18px;
+  --fs-700: 36px;
+  @media (max-width: 50em) {
+    --fs-700: 18px;
+    --fs-400: 12px;
+    --fs-300: 12px;
+    --fs-200: 10px;
+  }
+}
