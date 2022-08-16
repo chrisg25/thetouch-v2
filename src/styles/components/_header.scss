@@ -1,0 +1,12 @@
+.header {
+  padding-left: 110px;
+  padding-top: 30px;
+
+  &__title {
+    font-weight: $fw-bold;
+  }
+
+  &__sub-title {
+    font-weight: normal;
+  }
+}
