@@ -1,0 +1,24 @@
+.sidebar {
+  width: 90px;
+  height: 100vh;
+  position: fixed;
+  background-color: $accent-clr;
+
+  img {
+    position: absolute;
+    bottom: 20px;
+    margin-left: 8px;
+  }
+
+  &__nav-item {
+    padding-inline: 30px;
+    padding-block: 20px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__nav-item-active {
+    background-color: $primary-clr;
+  }
+}
