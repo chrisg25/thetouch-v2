@@ -52,7 +52,7 @@
     list-style: none;
     position: absolute;
     margin-top: 10px;
-    height: 100px;
+    min-height: 20px;
     width: 430px;
     border: 2px solid $primary-clr;
     border-radius: 8px;
@@ -67,6 +67,7 @@
     padding-inline: 10px;
     padding-block: 5px;
     z-index: 11;
+    font-size: 12px;
     &:hover {
       cursor: pointer;
       background-color: rgba($primary-clr, 0.2);
@@ -108,5 +109,21 @@
     &:hover {
       cursor: pointer;
     }
+  }
+
+  &__add-image-icon-container {
+    width: 30px;
+    height: 30px;
+    margin-top: 45px;
+    margin-inline: auto;
+    transition: all ease;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__add-image-icon-centered {
+    grid-column-start: 2;
+    grid-column-end: 3;
   }
 }
