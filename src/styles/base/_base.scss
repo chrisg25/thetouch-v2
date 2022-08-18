@@ -44,7 +44,7 @@ a:not([class]) {
   color: inherit;
 }
 
-input,
+input[type="text"],
 textarea {
   display: block;
 }
