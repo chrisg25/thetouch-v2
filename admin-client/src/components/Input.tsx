@@ -23,7 +23,7 @@ interface InputProps {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   showDropdown?: () => void;
-  setSelectedArtist?: (name: string, value: string) => void;
+  setSelectedArtist?: (name: string, value: string, id: number) => void;
 }
 
 const Input: FC<InputProps> = ({
@@ -31,11 +31,9 @@ const Input: FC<InputProps> = ({
   placeholder,
   inputName,
   value,
-
   isTextarea = false,
   isDropdownShowed = false,
   onChange,
-  //   showDropdown,
   setSelectedArtist,
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -77,7 +75,11 @@ const Input: FC<InputProps> = ({
                 key={journalistDetails.name}
                 className="add-articles__graphics-artist-item"
                 onClick={() => {
-                  setSelectedArtist?.(inputName, journalistDetails.name);
+                  setSelectedArtist?.(
+                    inputName,
+                    journalistDetails.name,
+                    journalistDetails.id
+                  );
                   setShowDropdown((prevState) => false);
                 }}
               >
