@@ -39,6 +39,9 @@ const Input: FC<InputProps> = ({
   setSelectedArtist,
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const filteredJournalist = dummyJournalists.filter(({ name }) => {
+    return name.toLowerCase().includes(`${value}`.toLowerCase());
+  });
   const inputComponent = !isTextarea ? (
     <input
       className="add-articles__input-field"
@@ -68,11 +71,8 @@ const Input: FC<InputProps> = ({
       {inputComponent}
       {showDropdown && (
         <ul className={`add-articles__graphics-artist`} hidden={!showDropdown}>
-          {dummyJournalists
-            .filter(({ name }) => {
-              return name.toLowerCase().includes(`${value}`.toLowerCase());
-            })
-            .map((journalistDetails) => (
+          {filteredJournalist.length >= 1 ? (
+            filteredJournalist.map((journalistDetails) => (
               <li
                 key={journalistDetails.name}
                 className="add-articles__graphics-artist-item"
@@ -83,7 +83,15 @@ const Input: FC<InputProps> = ({
               >
                 <h1>{journalistDetails.name}</h1>
               </li>
-            ))}
+            ))
+          ) : (
+            <li
+              onClick={() => setShowDropdown((prevState) => false)}
+              className="add-articles__graphics-artist-item"
+            >
+              <h1>No Journalist Found</h1>
+            </li>
+          )}
         </ul>
       )}
     </>
