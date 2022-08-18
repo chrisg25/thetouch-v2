@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import { FC } from "react";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
+import AddArticles from "./pages/AddArticles";
+import AddJournalist from "./pages/AddJournalist";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App: FC = () => {
   return (
-    <div className="App">
-      <h1>The Touch Admin</h1>
-    </div>
-  )
-}
+    <>
+      <Sidebar />
+      <Header />
+      <AddArticles />
+    </>
+  );
+};
 
-export default App
+export default App;
