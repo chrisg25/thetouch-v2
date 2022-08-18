@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Featured from "../components/Home/Featured";
 import FeaturedArticlesContainer from "../components/Home/FeaturedArticlesContainer";
+import { ArticleType } from "../types";
 interface HomePageProps {
   pathname: string;
 }
@@ -29,7 +30,7 @@ const Home: NextPage<HomePageProps> = ({ pathname }) => {
       headline:
         "NEWS | TAMBAYAYONG &apos;21: First Online Leadership Training of SGCD - II",
     },
-  ];
+  ] as ArticleType[];
   return (
     <section className="home">
       <Featured
