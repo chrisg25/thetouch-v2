@@ -69,7 +69,7 @@ const AddArticles: FC = () => {
         value={articleDetails.author}
         hasDropdown
         isDropdownShowed={true}
-        setSelectedArtist={setSelectedOption}
+        setSelectedOption={setSelectedOption}
       />
 
       <Input
@@ -80,7 +80,7 @@ const AddArticles: FC = () => {
         value={articleDetails.graphics_artist}
         hasDropdown
         isDropdownShowed={true}
-        setSelectedArtist={setSelectedOption}
+        setSelectedOption={setSelectedOption}
       />
 
       <DateTimeInput
