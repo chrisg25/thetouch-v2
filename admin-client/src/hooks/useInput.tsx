@@ -1,12 +1,17 @@
 import React, { ChangeEvent, useState } from "react";
-
+import { v4 as uuid } from "uuid";
 interface AddArticleInputValuesTypes {
   category: string;
   headline: string;
   body: string;
   author_id: string;
   graphics_artist_id: string;
-  photos: Array<string>;
+  photos: PhotoType[];
+}
+
+interface PhotoType {
+  id: string;
+  photo: string;
 }
 
 const useInput = () => {
@@ -17,7 +22,7 @@ const useInput = () => {
       headline: "",
       author_id: "",
       graphics_artist_id: "",
-      photos: [],
+      photos: [] as PhotoType[],
     });
 
   const [isDropdownShowed, setIsDropdownShowed] = useState<boolean>(false);
@@ -41,7 +46,13 @@ const useInput = () => {
       reader.onloadend = () => {
         setArticleDetails((prevDetails) => ({
           ...prevDetails,
-          photos: [...prevDetails.photos, reader.result] as any,
+          photos: [
+            ...prevDetails.photos,
+            {
+              id: uuid(),
+              photo: reader.result,
+            },
+          ] as any,
         }));
       };
     }
@@ -55,11 +66,19 @@ const useInput = () => {
     console.log(articleDetails.graphics_artist_id);
   };
 
+  const removePhotoHandler = (id: string) => {
+    setArticleDetails((prevState) => ({
+      ...prevState,
+      photos: prevState.photos.filter((photo) => photo.id !== id),
+    }));
+  };
+
   return {
     articleDetails,
     detailsInputHandler,
     setSelectedOption,
     fileInputHandler,
+    removePhotoHandler,
   };
 };
 

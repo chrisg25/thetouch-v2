@@ -1,33 +1,46 @@
-import React, { ChangeEvent, FC, useRef, useState } from "react";
-import ImageLogoIcon from "../components/icons/ImageLogoIcon";
+import React, { ChangeEvent, FC, useRef } from "react";
+import PlusIcon from "./icons/PlusIcon";
 
 interface FileInputProps {
   label: string;
-  photos: Array<string>;
+  photos: PhotoType[];
   onFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  removePhoto: (id: string) => void;
 }
 
-const FileInput: FC<FileInputProps> = ({ photos, onFileChange }) => {
+interface PhotoType {
+  id: string;
+  photo: string;
+}
+
+const FileInput: FC<FileInputProps> = ({
+  photos,
+  onFileChange,
+  removePhoto,
+}) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   return (
     <>
-      <h3 className="add-articles__category-label">Featured Photos</h3>
+      <h3 className="add-articles__category-label">Featured Photosss</h3>
       <div className="add-articles__photo-list-container">
-        {Array.isArray(photos) ? (
+        {Array.isArray(photos) &&
           photos.map((photo) => (
             <div className="add-articles__photo-container">
-              <div className="add-articles__delete-photo-icon"></div>
-              <img src={photo} className="add-articles__photo" />
+              <div
+                className="add-articles__delete-photo-icon"
+                onClick={() => removePhoto(photo.id)}
+              ></div>
+              <img src={photo.photo} className="add-articles__photo" />
             </div>
-          ))
-        ) : (
-          <div style={{ width: "30px", height: "30px" }}>
-            <ImageLogoIcon />
-          </div>
-        )}
-        <div>
-          <h1 onClick={() => fileInputRef.current?.click()}>Add More</h1>
+          ))}
+        <div
+          className={`add-articles__add-image-icon-container${
+            photos.length === 0 ? " add-articles__add-image-icon-centered" : ""
+          }`}
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <PlusIcon />
         </div>
       </div>
       <input
