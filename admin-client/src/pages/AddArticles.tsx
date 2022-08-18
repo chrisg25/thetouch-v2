@@ -1,4 +1,5 @@
 import { FC, useState, useRef } from "react";
+import DateTimeInput from "../components/DateTimeInput";
 import FileInput from "../components/FileInput";
 import Input from "../components/Input";
 import useInput from "../hooks/useInput";
@@ -9,6 +10,7 @@ const AddArticles: FC = () => {
     detailsInputHandler,
     setSelectedOption,
     fileInputHandler,
+    removePhotoHandler,
   } = useInput();
 
   const addArticle = async () => {
@@ -64,10 +66,13 @@ const AddArticles: FC = () => {
         setSelectedArtist={setSelectedOption}
       />
 
+      <DateTimeInput />
+
       <FileInput
         onFileChange={fileInputHandler}
         label="Add Photos"
         photos={articleDetails.photos}
+        removePhoto={removePhotoHandler}
       />
     </div>
   );
