@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { FC, useState, useRef } from "react";
 import DateTimeInput from "../components/DateTimeInput";
 import FileInput from "../components/FileInput";
@@ -15,13 +16,21 @@ const AddArticles: FC = () => {
   } = useInput();
 
   const addArticle = async () => {
+    const body = {
+      ...articleDetails,
+      createdAt: dayjs(`${articleDetails.date} ${articleDetails.time}`).format(
+        "YYYY-MM-DD hh:mm"
+      ),
+    };
+    console.log(body);
     const response = await fetch("http://localhost:5000/articles", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify(body),
     });
+
     const data = await response.json();
     console.log(data, "response");
   };
@@ -79,6 +88,11 @@ const AddArticles: FC = () => {
         photos={articleDetails.photos}
         removePhoto={removePhotoHandler}
       />
+
+      <button className="add-articles__button" onClick={addArticle}>
+        Add Article
+      </button>
+      <button className="add-articles__button">Clear Fields</button>
     </div>
   );
 };

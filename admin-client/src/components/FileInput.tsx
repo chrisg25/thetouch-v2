@@ -50,13 +50,8 @@ const FileInput: FC<FileInputProps> = ({
         ref={fileInputRef}
         onChange={onFileChange}
       />
-      <button className="add-articles__button">Add Article</button>
-      <button className="add-articles__button">Clear Fields</button>
     </>
   );
 };
 
 export default FileInput;
-
-// onClick={addArticle}
-// onClick={addArticle}
