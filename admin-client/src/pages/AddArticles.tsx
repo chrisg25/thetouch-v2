@@ -11,6 +11,7 @@ const AddArticles: FC = () => {
     setSelectedOption,
     fileInputHandler,
     removePhotoHandler,
+    dateTimeInputHandler,
   } = useInput();
 
   const addArticle = async () => {
@@ -66,7 +67,11 @@ const AddArticles: FC = () => {
         setSelectedArtist={setSelectedOption}
       />
 
-      <DateTimeInput />
+      <DateTimeInput
+        setDateTime={dateTimeInputHandler}
+        dateValue={articleDetails.date}
+        timeValue={articleDetails.time}
+      />
 
       <FileInput
         onFileChange={fileInputHandler}

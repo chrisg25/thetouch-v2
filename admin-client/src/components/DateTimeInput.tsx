@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 import dayjs from "dayjs";
 
-const DateTimeInput = () => {
+interface DateTimeInputProps {
+  timeValue: string;
+  dateValue: string;
+  setDateTime: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const DateTimeInput: FC<DateTimeInputProps> = ({
+  timeValue,
+  dateValue,
+  setDateTime,
+}) => {
   const [hasCustomDate, setHasCustomDate] = useState<boolean>(false);
-  const [dateValue, setDateValue] = useState<string>(
-    dayjs().format("YYYY-MM-DD")
-  );
-  const [time, setTime] = useState<string>(dayjs().format("hh:mm"));
+  // const [dateValue, setDateValue] = useState<string>(
+  //   dayjs().format("YYYY-MM-DD")
+  // );
+  // const [time, setTime] = useState<string>(dayjs().format("hh:mm"));
   return (
     <div className="add-articles__datetime-input-container">
       <div
@@ -36,10 +46,7 @@ const DateTimeInput = () => {
             name="date"
             className="add-articles__input-field"
             type="date"
-            onChange={(e) => {
-              const date = dayjs(new Date(e.target.value)).format("YYYY-MM-DD");
-              setDateValue(() => date.toString() as any);
-            }}
+            onChange={setDateTime}
             value={dateValue}
             style={{ display: "block" }}
           />
@@ -50,10 +57,8 @@ const DateTimeInput = () => {
             name="time"
             type="time"
             className="add-articles__input-field"
-            onChange={(e) =>
-              setTime(dayjs(`${dateValue} ${e.target.value}`).format("hh:mm"))
-            }
-            value={time}
+            onChange={setDateTime}
+            value={timeValue}
             style={{ display: "block" }}
           />
         </>

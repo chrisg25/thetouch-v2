@@ -1,11 +1,14 @@
+import dayjs from "dayjs";
 import React, { ChangeEvent, useState } from "react";
-import { v4 as uuid } from "uuid";
+import { stringify, v4 as uuid } from "uuid";
 interface AddArticleInputValuesTypes {
   category: string;
   headline: string;
   body: string;
   author_id: string;
   graphics_artist_id: string;
+  date: string;
+  time: string;
   photos: PhotoType[];
 }
 
@@ -22,6 +25,8 @@ const useInput = () => {
       headline: "",
       author_id: "",
       graphics_artist_id: "",
+      date: "",
+      time: "",
       photos: [] as PhotoType[],
     });
 
@@ -58,6 +63,22 @@ const useInput = () => {
     }
   };
 
+  const dateTimeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setArticleDetails((prevState) => {
+      let inputValue;
+      if (e.target.type === "date") {
+        inputValue = dayjs(e.target.value).format("YYYY-MM-DD");
+      }
+      if (e.target.type === "time") {
+        inputValue = dayjs(`June 18, 1999 ${e.target.value}`).format("hh:mm");
+      }
+      return {
+        ...prevState,
+        [e.target.name]: inputValue,
+      };
+    });
+  };
+
   const setSelectedOption = (name: string, value: string) => {
     setArticleDetails((prevState) => ({
       ...prevState,
@@ -79,6 +100,7 @@ const useInput = () => {
     setSelectedOption,
     fileInputHandler,
     removePhotoHandler,
+    dateTimeInputHandler,
   };
 };
 
