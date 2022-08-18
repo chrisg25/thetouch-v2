@@ -5,8 +5,10 @@ interface AddArticleInputValuesTypes {
   category: string;
   headline: string;
   body: string;
-  author_id: string;
-  graphics_artist_id: string;
+  author: string;
+  author_id: number;
+  graphics_artist: string;
+  graphics_artist_id: number;
   date: string;
   time: string;
   photos: PhotoType[];
@@ -23,10 +25,12 @@ const useInput = () => {
       category: "",
       body: "",
       headline: "",
-      author_id: "",
-      graphics_artist_id: "",
-      date: "",
-      time: "",
+      author: "",
+      graphics_artist: "",
+      date: dayjs().format("YYYY-MM-DD"),
+      time: dayjs().format("hh:mm"),
+      graphics_artist_id: 0,
+      author_id: 0,
       photos: [] as PhotoType[],
     });
 
@@ -79,10 +83,11 @@ const useInput = () => {
     });
   };
 
-  const setSelectedOption = (name: string, value: string) => {
+  const setSelectedOption = (name: string, value: string, id: number) => {
     setArticleDetails((prevState) => ({
       ...prevState,
       [name]: value,
+      [`${name}`.concat("_id")]: id,
     }));
     console.log(articleDetails.graphics_artist_id);
   };

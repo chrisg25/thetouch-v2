@@ -28,6 +28,7 @@ const FileInput: FC<FileInputProps> = ({
           photos.map((photo) => (
             <div className="add-articles__photo-container">
               <div
+                key={photo.id}
                 className="add-articles__delete-photo-icon"
                 onClick={() => removePhoto(photo.id)}
               ></div>

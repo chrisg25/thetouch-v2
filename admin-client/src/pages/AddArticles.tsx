@@ -39,6 +39,13 @@ const AddArticles: FC = () => {
     <div className="add-articles">
       <h1 className="add-articles__title">Add article details below</h1>
       <Input
+        label="Category"
+        onChange={detailsInputHandler}
+        placeholder={"Category"}
+        inputName="category"
+        value={articleDetails.category}
+      />
+      <Input
         label="Headline"
         onChange={detailsInputHandler}
         placeholder={"Headline"}
@@ -59,7 +66,7 @@ const AddArticles: FC = () => {
         onChange={detailsInputHandler}
         placeholder={"Author"}
         inputName="author_id"
-        value={articleDetails.author_id}
+        value={articleDetails.author}
         hasDropdown
         isDropdownShowed={true}
         setSelectedArtist={setSelectedOption}
@@ -70,7 +77,7 @@ const AddArticles: FC = () => {
         inputName="graphics_artist_id"
         placeholder="Graphics Artist"
         onChange={detailsInputHandler}
-        value={articleDetails.graphics_artist_id}
+        value={articleDetails.graphics_artist}
         hasDropdown
         isDropdownShowed={true}
         setSelectedArtist={setSelectedOption}
