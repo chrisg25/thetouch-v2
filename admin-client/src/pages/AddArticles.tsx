@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import { FC, useState, useRef } from "react";
-import DateTimeInput from "../components/DateTimeInput";
-import FileInput from "../components/FileInput";
-import Input from "../components/Input";
+import DateTimeInput from "../components/inputs/DateTimeInput";
+import FileInput from "../components/inputs/FileInput";
+import Input from "../components/inputs/Input";
 import useInput from "../hooks/useInput";
 
 const AddArticles: FC = () => {
