@@ -5,12 +5,10 @@ interface AddArticleInputValuesTypes {
   category: string;
   headline: string;
   body: string;
-  author: string;
-  author_id: number;
-  graphics_artist: string;
-  graphics_artist_id: number;
-  date: string;
-  time: string;
+  authored_by: number;
+  graphics_by: number;
+  date?: string;
+  time?: string;
   photos: PhotoType[];
 }
 
@@ -25,12 +23,10 @@ const useInput = () => {
       category: "",
       body: "",
       headline: "",
-      author: "",
-      graphics_artist: "",
+      authored_by: 0,
+      graphics_by: 0,
       date: dayjs().format("YYYY-MM-DD"),
       time: dayjs().format("hh:mm"),
-      graphics_artist_id: 0,
-      author_id: 0,
       photos: [] as PhotoType[],
     });
 
@@ -89,7 +85,6 @@ const useInput = () => {
       [name]: value,
       [`${name}`.concat("_id")]: id,
     }));
-    console.log(articleDetails.graphics_artist_id);
   };
 
   const removePhotoHandler = (id: string) => {

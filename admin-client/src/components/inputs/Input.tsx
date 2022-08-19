@@ -2,17 +2,17 @@ import React, { ChangeEvent, FC, useState } from "react";
 
 const dummyJournalists: Array<{ id: number; name: string }> = [
   {
-    id: 1,
+    id: 3,
     name: "Jane Doe",
   },
   {
-    id: 2,
+    id: 4,
     name: "John Doe",
   },
 ];
 
 interface InputProps {
-  value: string;
+  value: string | number;
   inputName: string;
   label: string;
   placeholder: string;

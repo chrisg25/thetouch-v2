@@ -3,6 +3,8 @@ import { FC, useState, useRef } from "react";
 import DateTimeInput from "../components/inputs/DateTimeInput";
 import FileInput from "../components/inputs/FileInput";
 import Input from "../components/inputs/Input";
+import Modal from "../components/Modal";
+import ModalPortal from "../components/ModalPortal";
 import useInput from "../hooks/useInput";
 
 const AddArticles: FC = () => {
@@ -15,13 +17,16 @@ const AddArticles: FC = () => {
     dateTimeInputHandler,
   } = useInput();
 
+  const [showModal, setShowModal] = useState(false);
+
   const addArticle = async () => {
     const body = {
       ...articleDetails,
-      createdAt: dayjs(`${articleDetails.date} ${articleDetails.time}`).format(
-        "YYYY-MM-DD hh:mm"
-      ),
+      photos: articleDetails.photos.map((photo) => photo.photo),
+      createdAt: dayjs(`${articleDetails.date} ${articleDetails.time}`),
     };
+    delete body.date;
+    delete body.time;
     console.log(body);
     const response = await fetch("http://localhost:5000/articles", {
       method: "POST",
@@ -37,6 +42,7 @@ const AddArticles: FC = () => {
 
   return (
     <div className="add-articles">
+      {showModal && <Modal />}
       <h1 className="add-articles__title">Add article details below</h1>
       <Input
         label="Category"
@@ -65,8 +71,8 @@ const AddArticles: FC = () => {
         label="Author"
         onChange={detailsInputHandler}
         placeholder={"Author"}
-        inputName="author_id"
-        value={articleDetails.author}
+        inputName="authored_by"
+        value={articleDetails.authored_by}
         hasDropdown
         isDropdownShowed={true}
         setSelectedOption={setSelectedOption}
@@ -74,10 +80,10 @@ const AddArticles: FC = () => {
 
       <Input
         label="Graphics Artist"
-        inputName="graphics_artist_id"
+        inputName="graphics_by"
         placeholder="Graphics Artist"
         onChange={detailsInputHandler}
-        value={articleDetails.graphics_artist}
+        value={articleDetails.graphics_by}
         hasDropdown
         isDropdownShowed={true}
         setSelectedOption={setSelectedOption}
@@ -85,8 +91,8 @@ const AddArticles: FC = () => {
 
       <DateTimeInput
         setDateTime={dateTimeInputHandler}
-        dateValue={articleDetails.date}
-        timeValue={articleDetails.time}
+        dateValue={articleDetails.date as string}
+        timeValue={articleDetails.time as string}
       />
 
       <FileInput
@@ -96,7 +102,12 @@ const AddArticles: FC = () => {
         removePhoto={removePhotoHandler}
       />
 
-      <button className="add-articles__button" onClick={addArticle}>
+      <button
+        className="add-articles__button"
+        onClick={() => {
+          addArticle();
+        }}
+      >
         Add Article
       </button>
       <button className="add-articles__button">Clear Fields</button>
