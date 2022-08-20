@@ -26,7 +26,7 @@ const FileInput: FC<FileInputProps> = ({
       <div className="add-articles__photo-list-container">
         {Array.isArray(photos) &&
           photos.map((photo) => (
-            <div className="add-articles__photo-container">
+            <div className="add-articles__photo-container" key={photo.id}>
               <div
                 key={photo.id}
                 className="add-articles__delete-photo-icon"
