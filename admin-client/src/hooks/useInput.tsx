@@ -1,15 +1,18 @@
 import dayjs from "dayjs";
 import React, { ChangeEvent, useState } from "react";
-import { stringify, v4 as uuid } from "uuid";
+import { v4 as uuid } from "uuid";
 interface AddArticleInputValuesTypes {
   category: string;
   headline: string;
   body: string;
-  authored_by: number;
-  graphics_by: number;
-  date?: string;
-  time?: string;
+  authored_by_id: number;
+  authored_by: string;
+  graphics_by_id: number;
+  graphics_by: string;
+  date?: string | null;
+  time?: string | null;
   photos: PhotoType[];
+  createdAt?: string | null;
 }
 
 interface PhotoType {
@@ -23,10 +26,12 @@ const useInput = () => {
       category: "",
       body: "",
       headline: "",
-      authored_by: 0,
-      graphics_by: 0,
-      date: dayjs().format("YYYY-MM-DD"),
-      time: dayjs().format("hh:mm"),
+      authored_by: "",
+      graphics_by: "",
+      authored_by_id: 0,
+      graphics_by_id: 0,
+      date: null,
+      time: null,
       photos: [] as PhotoType[],
     });
 
@@ -70,7 +75,9 @@ const useInput = () => {
         inputValue = dayjs(e.target.value).format("YYYY-MM-DD");
       }
       if (e.target.type === "time") {
-        inputValue = dayjs(`June 18, 1999 ${e.target.value}`).format("hh:mm");
+        inputValue = dayjs(`June 18, 1999 ${e.target.value}`).format(
+          "HH:mm:ss"
+        );
       }
       return {
         ...prevState,
