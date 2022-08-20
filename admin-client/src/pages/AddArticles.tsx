@@ -4,7 +4,6 @@ import DateTimeInput from "../components/inputs/DateTimeInput";
 import FileInput from "../components/inputs/FileInput";
 import Input from "../components/inputs/Input";
 import Modal from "../components/Modal";
-import ModalPortal from "../components/ModalPortal";
 import useInput from "../hooks/useInput";
 
 const AddArticles: FC = () => {
@@ -20,11 +19,16 @@ const AddArticles: FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   const addArticle = async () => {
-    const body = {
+    let body = {
       ...articleDetails,
-      photos: articleDetails.photos.map((photo) => photo.photo),
-      createdAt: dayjs(`${articleDetails.date} ${articleDetails.time}`),
     };
+    if (articleDetails.date === null && articleDetails.time === null) {
+      body = {
+        ...articleDetails,
+        photos: articleDetails.photos.map((photo) => photo.photo) as any,
+        createdAt: dayjs().format(),
+      };
+    }
     delete body.date;
     delete body.time;
     console.log(body);
@@ -35,9 +39,7 @@ const AddArticles: FC = () => {
       },
       body: JSON.stringify(body),
     });
-
     const data = await response.json();
-    console.log(data, "response");
   };
 
   return (
@@ -91,8 +93,8 @@ const AddArticles: FC = () => {
 
       <DateTimeInput
         setDateTime={dateTimeInputHandler}
-        dateValue={articleDetails.date as string}
-        timeValue={articleDetails.time as string}
+        dateValue={articleDetails.date!}
+        timeValue={articleDetails.time!}
       />
 
       <FileInput
@@ -102,12 +104,7 @@ const AddArticles: FC = () => {
         removePhoto={removePhotoHandler}
       />
 
-      <button
-        className="add-articles__button"
-        onClick={() => {
-          addArticle();
-        }}
-      >
+      <button className="add-articles__button" onClick={() => addArticle()}>
         Add Article
       </button>
       <button className="add-articles__button">Clear Fields</button>
