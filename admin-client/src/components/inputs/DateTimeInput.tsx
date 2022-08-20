@@ -1,9 +1,8 @@
 import React, { ChangeEvent, FC, useState } from "react";
-import dayjs from "dayjs";
 
 interface DateTimeInputProps {
-  timeValue: string;
-  dateValue: string;
+  timeValue?: string;
+  dateValue?: string;
   setDateTime: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -13,10 +12,7 @@ const DateTimeInput: FC<DateTimeInputProps> = ({
   setDateTime,
 }) => {
   const [hasCustomDate, setHasCustomDate] = useState<boolean>(false);
-  // const [dateValue, setDateValue] = useState<string>(
-  //   dayjs().format("YYYY-MM-DD")
-  // );
-  // const [time, setTime] = useState<string>(dayjs().format("hh:mm"));
+
   return (
     <div className="add-articles__datetime-input-container">
       <div
