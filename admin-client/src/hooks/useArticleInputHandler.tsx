@@ -11,6 +11,8 @@ interface ArticleType {
   graphics_by: string;
   graphics_by_id: number | null;
   photos: PhotoType[];
+  date?: string;
+  time?: string;
 }
 
 interface PhotoType {
