@@ -11,37 +11,37 @@ const Sidebar = () => {
     <div className="sidebar">
       <nav className="sidebar__nav">
         <ul>
-          <li
-            className={`sidebar__nav-item ${
-              location.pathname === "/" ? "sidebar__nav-item-active" : ""
-            }`}
-          >
-            <NavLink to={"/"}>
+          <NavLink to={"/"}>
+            <li
+              className={`sidebar__nav-item ${
+                location.pathname === "/" ? "sidebar__nav-item-active" : ""
+              }`}
+            >
               <HomeIcon />
-            </NavLink>
-          </li>
-          <li
-            className={`sidebar__nav-item ${
-              location.pathname === "/add-articles"
-                ? "sidebar__nav-item-active"
-                : ""
-            }`}
-          >
-            <NavLink to={"/add-articles"}>
+            </li>
+          </NavLink>
+          <NavLink to={"/add-articles"}>
+            <li
+              className={`sidebar__nav-item ${
+                location.pathname === "/add-articles"
+                  ? "sidebar__nav-item-active"
+                  : ""
+              }`}
+            >
               <AddArticleIcon />
-            </NavLink>
-          </li>
-          <li
-            className={`sidebar__nav-item ${
-              location.pathname === "/add-journalists"
-                ? "sidebar__nav-item-active"
-                : ""
-            }`}
-          >
-            <NavLink to={"/add-journalists"}>
+            </li>
+          </NavLink>
+          <NavLink to={"/add-journalists"}>
+            <li
+              className={`sidebar__nav-item ${
+                location.pathname === "/add-journalists"
+                  ? "sidebar__nav-item-active"
+                  : ""
+              }`}
+            >
               <AddJournalistIcon />
-            </NavLink>
-          </li>
+            </li>
+          </NavLink>
         </ul>
         <img src={touchIcon} alt="touch-icon" />
       </nav>
