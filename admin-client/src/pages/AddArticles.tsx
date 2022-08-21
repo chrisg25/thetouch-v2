@@ -3,7 +3,6 @@ import { FC, useState, useRef } from "react";
 import DateTimeInput from "../components/inputs/DateTimeInput";
 import FileInput from "../components/inputs/FileInput";
 import Input from "../components/inputs/Input";
-import Modal from "../components/Modal";
 import useInput from "../hooks/useInput";
 
 const AddArticles: FC = () => {
@@ -44,7 +43,6 @@ const AddArticles: FC = () => {
 
   return (
     <div className="add-articles">
-      {showModal && <Modal />}
       <h1 className="add-articles__title">Add article details below</h1>
       <Input
         label="Category"
