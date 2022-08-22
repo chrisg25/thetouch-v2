@@ -140,6 +140,7 @@ const CustomInput: FC<CustomInputProps> = ({
                   onChange={onChange}
                   value={dateValue}
                   onFocus={() => onRemoveError("date")}
+                  style={{ display: "block" }}
                 />
               </label>
               {hasCustomDate &&
@@ -159,6 +160,7 @@ const CustomInput: FC<CustomInputProps> = ({
                   onChange={onChange}
                   value={timeValue}
                   onFocus={() => onRemoveError("time")}
+                  style={{ display: "block" }}
                 />
                 {hasCustomDate &&
                   errors.findIndex((err) => err.for === "time") > -1 && (
