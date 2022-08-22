@@ -16,7 +16,7 @@ const useInputHandler = () => {
     date: "",
     time: "",
   });
-  const [errors, setErrors] = useState<ErrorType[]>([]);
+
   const { pathname } = useLocation();
   // state for showing custom date and time input
   const [hasCustomDate, setHasCustomDate] = useState<boolean>(false);
@@ -54,9 +54,6 @@ const useInputHandler = () => {
         ...prevState,
         [e.target.name]: e.target.value,
       }));
-      setErrors((prevErrors) => [
-        ...prevErrors.filter((err) => err.for !== e.target.name),
-      ]);
     }
   };
 
@@ -88,30 +85,17 @@ const useInputHandler = () => {
     }));
   };
 
-  const onErrorOccured = (errorDetails: ErrorType) => {
-    setErrors((prevState) => [...prevState, errorDetails]);
-  };
-
-  const onRemoveError = (errorFor: string) => {
-    setErrors((prevErrors) => [
-      ...prevErrors.filter((error) => error.for !== errorFor),
-    ]);
-  };
-
   const onHasCustomDateHandler = () => {
     setHasCustomDate((prevState) => !prevState);
   };
 
   return {
     articleDetails,
-    errors,
     hasCustomDate,
     onInputChangeHandler,
     onSelectedItemHandler,
     onRemovePhoto,
     onClearDateTimeValues,
-    onErrorOccured,
-    onRemoveError,
     onHasCustomDateHandler,
   };
 };
