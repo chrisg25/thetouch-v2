@@ -56,6 +56,8 @@ const CustomInput: FC<CustomInputProps> = ({
   // state for showing dropdown if inputType = "dropdown"
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const hasError: boolean =
+    errors.findIndex((err) => err.for === inputName) > -1;
 
   let inputComponent: ReactNode;
   if (type === "text") {
@@ -73,8 +75,8 @@ const CustomInput: FC<CustomInputProps> = ({
             onFocus={() => onRemoveError(inputName)}
           />
         </label>
-        {errors.findIndex((err) => err.for === inputName) > -1 && (
-          <h1 style={{ color: "red" }}>Field Required!</h1>
+        {hasError && (
+          <h1 className="add-articles__error-message">Field Required!</h1>
         )}
       </div>
     );
@@ -97,8 +99,8 @@ const CustomInput: FC<CustomInputProps> = ({
             }}
           />
         </label>
-        {errors.findIndex((err) => err.for === inputName) > -1 && (
-          <h1 style={{ color: "red" }}>Field Required!</h1>
+        {hasError && (
+          <h1 className="add-articles__error-message">Field Required!</h1>
         )}
         <Dropdown
           inputName={inputName}
@@ -113,11 +115,7 @@ const CustomInput: FC<CustomInputProps> = ({
   if (type === "dateTime") {
     inputComponent = (
       <>
-        <label
-          className="add-articles__category-label"
-          htmlFor="checkbox"
-          style={{ display: "block" }}
-        >
+        <label className="add-articles__category-label" htmlFor="checkbox">
           <input
             id="checkbox"
             name="checkboxx"
@@ -141,13 +139,14 @@ const CustomInput: FC<CustomInputProps> = ({
                   type="date"
                   onChange={onChange}
                   value={dateValue}
-                  style={{ display: "block" }}
                   onFocus={() => onRemoveError("date")}
                 />
               </label>
               {hasCustomDate &&
                 errors.findIndex((err) => err.for === "date") > -1 && (
-                  <h1 style={{ color: "red" }}>Field Required!</h1>
+                  <h1 className="add-articles__error-message">
+                    Field Required!
+                  </h1>
                 )}
             </div>
             <div>
@@ -159,12 +158,13 @@ const CustomInput: FC<CustomInputProps> = ({
                   className="add-articles__input-field"
                   onChange={onChange}
                   value={timeValue}
-                  style={{ display: "block" }}
                   onFocus={() => onRemoveError("time")}
                 />
                 {hasCustomDate &&
                   errors.findIndex((err) => err.for === "time") > -1 && (
-                    <h1 style={{ color: "red" }}>Field Required!</h1>
+                    <h1 className="add-articles__error-message">
+                      Field Required!
+                    </h1>
                   )}
               </label>
             </div>
@@ -225,8 +225,8 @@ const CustomInput: FC<CustomInputProps> = ({
             onFocus={() => onRemoveError(inputName)}
           />
         </label>
-        {errors.findIndex((err) => err.for === inputName) > -1 && (
-          <h1 style={{ color: "red" }}>Field Required!</h1>
+        {hasError && (
+          <h1 className="add-articles__error-message">Field Required!</h1>
         )}
       </>
     );
