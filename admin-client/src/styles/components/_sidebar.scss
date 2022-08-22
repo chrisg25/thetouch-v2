@@ -3,7 +3,8 @@
   height: 100vh;
   position: fixed;
   background-color: $accent-clr;
-
+  top: 0;
+  z-index: 10;
   img {
     position: absolute;
     bottom: 20px;
