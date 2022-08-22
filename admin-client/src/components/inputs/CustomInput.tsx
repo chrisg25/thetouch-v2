@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import Dropdown from "../Dropdown";
+import Dropdown from "./Dropdown";
 import PlusIcon from "../icons/PlusIcon";
 
 interface CustomInputProps {

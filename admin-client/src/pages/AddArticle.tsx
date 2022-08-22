@@ -4,11 +4,6 @@ import useArticleInputHandler from "../hooks/useArticleInputHandler";
 import useErrorHandler from "../hooks/useErrorHandler";
 import * as dayjs from "dayjs";
 
-interface PhotoType {
-  id: string;
-  url: string;
-}
-
 const AddArticle = () => {
   const {
     articleDetails,

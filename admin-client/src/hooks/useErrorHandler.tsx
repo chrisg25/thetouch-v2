@@ -1,9 +1,5 @@
 import { useState } from "react";
-
-interface ErrorType {
-  for: string;
-  message: string;
-}
+import { ErrorType } from "../types";
 
 const useErrorHandler = () => {
   const [errors, setErrors] = useState<ErrorType[]>([]);
