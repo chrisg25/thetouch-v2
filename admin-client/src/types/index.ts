@@ -22,3 +22,11 @@ export interface ErrorType {
   for: string;
   message: string;
 }
+
+export interface JournalistType {
+  first_name: string;
+  last_name: string;
+  course: string;
+  position: string;
+  photos: PhotoType[];
+}
