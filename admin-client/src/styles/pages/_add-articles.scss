@@ -130,4 +130,21 @@
   &__error-message {
     color: $red-100;
   }
+
+  &__single-photo-container {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+
+  &__single-photo-list-container {
+    border: 2px solid $primary-clr;
+    border-radius: 8px;
+    max-width: 432px;
+    min-height: 260px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 260px;
+    padding: 12px;
+    gap: 20px;
+  }
 }

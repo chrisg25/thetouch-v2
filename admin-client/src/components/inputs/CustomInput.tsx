@@ -19,6 +19,7 @@ interface CustomInputProps {
   inputName: string;
   hasCustomDate?: boolean;
   errors: ErrorType[];
+  singlePhoto?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onRemovePhoto?: (photoId: string) => void;
   onSelectedItemHandler?: (inputName: string, name: string, id: number) => void;
@@ -46,6 +47,7 @@ const CustomInput: FC<CustomInputProps> = ({
   timeValue,
   errors,
   hasCustomDate,
+  singlePhoto = false,
   onChange,
   onRemovePhoto,
   onSelectedItemHandler,
@@ -179,29 +181,67 @@ const CustomInput: FC<CustomInputProps> = ({
     inputComponent = (
       <div>
         <h3 className="add-articles__category-label">Featured Photos</h3>
-        <div className="add-articles__photo-list-container">
-          {Array.isArray(photos) &&
-            photos.map((photo) => (
-              <div className="add-articles__photo-container" key={photo.id}>
-                <div
-                  key={photo.id}
-                  className="add-articles__delete-photo-icon"
-                  onClick={() => onRemovePhoto?.(photo.id)}
-                ></div>
-                <img src={photo.url} className="add-articles__photo" />
-              </div>
-            ))}
-          <div
-            className={`add-articles__add-image-icon-container${
-              photos?.length === 0
-                ? " add-articles__add-image-icon-centered"
-                : ""
-            }`}
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <PlusIcon />
+        {!singlePhoto && (
+          <div className="add-articles__photo-list-container">
+            {Array.isArray(photos) &&
+              !singlePhoto &&
+              photos.map((photo) => (
+                <div className="add-articles__photo-container" key={photo.id}>
+                  <div
+                    key={photo.id}
+                    className="add-articles__delete-photo-icon"
+                    onClick={() => onRemovePhoto?.(photo.id)}
+                  ></div>
+                  <img src={photo.url} className="add-articles__photo" />
+                </div>
+              ))}
+            <div
+              className={`add-articles__add-image-icon-container${
+                photos?.length === 0
+                  ? " add-articles__add-image-icon-centered"
+                  : ""
+              }`}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <PlusIcon />
+            </div>
           </div>
-        </div>
+        )}
+        {singlePhoto && (
+          <>
+            <div className="add-articles__single-photo-list-container">
+              {Array.isArray(photos) &&
+                (photos.length >= 1 ? (
+                  <div
+                    className="add-articles__single-photo-container"
+                    key={photos[0].id}
+                  >
+                    <img src={photos[0].url} className="add-articles__photo" />
+                  </div>
+                ) : (
+                  <div
+                    className={`add-articles__add-image-icon-container${
+                      photos?.length === 0
+                        ? " add-articles__add-image-icon-centered"
+                        : ""
+                    }`}
+                    style={{ marginTop: "100px" }}
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <PlusIcon />
+                  </div>
+                ))}
+            </div>
+            {Array.isArray(photos) && photos?.length >= 0 && (
+              <button
+                className="add-articles__button"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                Select Photo
+              </button>
+            )}
+          </>
+        )}
         <input
           type="file"
           accept="image/*"
