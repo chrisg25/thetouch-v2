@@ -1,4 +1,7 @@
 import React, { FC, useRef, ChangeEvent, useState } from "react";
+import CustomInput from "../components/inputs/CustomInput";
+import useErrorHandler from "../hooks/useErrorHandler";
+import useJournalistInputHandler from "../hooks/useJournalistInputHandler";
 
 interface AddJournalistType {
   first_name: string;
@@ -9,108 +12,97 @@ interface AddJournalistType {
 }
 
 const AddJournalist: FC = () => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [journalistDetails, setJournalistDetails] = useState<AddJournalistType>(
-    {
-      first_name: "",
-      last_name: "",
-      position: "",
-      course: "",
-      photo: "",
-    }
-  );
-  const [photos, setPhotos] = useState<Array<string>>([]);
+  const { journalistDetails, onInputChangeHandler, onSelectedItemHandler } =
+    useJournalistInputHandler();
+  const { errors, onErrorOccured, onRemoveError } = useErrorHandler();
 
-  const textInputHandler = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setJournalistDetails((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
+  const inputValidator = (): boolean => {
+    let isValidated: boolean = true;
+    for (const detail in journalistDetails) {
+      if (
+        Array.isArray(
+          journalistDetails[detail as keyof typeof journalistDetails]
+        ) &&
+        journalistDetails[detail as keyof typeof journalistDetails].length === 0
+      ) {
+        onErrorOccured({
+          for: detail,
+          message: "Field Required",
+        });
+      }
+      if (
+        journalistDetails[detail as keyof typeof journalistDetails]
+          .toString()
+          .trim() === ""
+      ) {
+        onErrorOccured({
+          for: detail,
+          message: "Field Required!",
+        });
+        isValidated = false;
+      }
+    }
+    return isValidated;
   };
 
-  const fileInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) {
-      return;
-    }
-    if (event.target.files[0]) {
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onloadend = () => {
-        setPhotos((prevPhotos: any) => [...prevPhotos, reader.result]);
-      };
-    }
+  const addJournalist = () => {
+    const isValidated = inputValidator();
   };
-  const addArticle = async () => {
-    const response = await fetch("http://localhost:5000/journalists", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...journalistDetails,
-        photo: [...photos][0],
-      }),
-    });
-    const data = await response.json();
-    console.log(data, "response");
-  };
+
   return (
-    <div>
-      <input
-        name="first_name"
-        type="text"
-        placeholder="First Name"
+    <div className="add-articles">
+      <CustomInput
         value={journalistDetails.first_name}
-        onChange={textInputHandler}
-      />
-      <input
-        name="last_name"
+        onChange={onInputChangeHandler}
+        labelPlaceholder="First Name"
+        inputName="first_name"
         type="text"
-        placeholder="Last Name"
+        errors={errors}
+        onRemoveError={onRemoveError}
+      />
+      <CustomInput
         value={journalistDetails.last_name}
-        onChange={textInputHandler}
-      />
-      <input
-        name="course"
+        onChange={onInputChangeHandler}
+        labelPlaceholder="Last Name"
+        inputName="last_name"
         type="text"
-        placeholder="Course"
+        errors={errors}
+        onRemoveError={onRemoveError}
+      />
+      <CustomInput
         value={journalistDetails.course}
-        onChange={textInputHandler}
+        onChange={onInputChangeHandler}
+        labelPlaceholder="Course"
+        inputName="course"
+        type="dropdown"
+        errors={errors}
+        onRemoveError={onRemoveError}
+        onSelectedItemHandler={onSelectedItemHandler}
       />
-      <input
-        name="position"
-        type="text"
-        placeholder="Position"
+      <CustomInput
         value={journalistDetails.position}
-        onChange={textInputHandler}
+        onChange={onInputChangeHandler}
+        labelPlaceholder="Position"
+        inputName="position"
+        type="dropdown"
+        errors={errors}
+        onRemoveError={onRemoveError}
+        onSelectedItemHandler={onSelectedItemHandler}
       />
-      <input
+      <CustomInput
+        photos={journalistDetails.photos}
+        onChange={onInputChangeHandler}
+        labelPlaceholder="Photos"
+        inputName="photos"
         type="file"
-        hidden
-        ref={fileInputRef}
-        onChange={fileInputHandler}
+        errors={errors}
+        onRemoveError={onRemoveError}
+        singlePhoto={true}
       />
-      <div
-        style={{
-          padding: "10px",
-          height: "100px",
-          width: "250px",
-          border: "1px solid black",
-        }}
-        onClick={() => fileInputRef.current?.click()}
-      >
-        {photos.map((photo) => (
-          <div
-            style={{ height: "100%", width: "70px" }}
-            key={photo.substring(0, photo.length - 100)}
-          >
-            <img src={photo} style={{ height: "100%", width: "100%" }} />
-          </div>
-        ))}
-      </div>
-      <button onClick={addArticle}>Add Article</button>
+      <button className="add-articles__button" onClick={() => addJournalist()}>
+        Add Article
+      </button>
+      <button className="add-articles__button">Clear Fields</button>
     </div>
   );
 };
