@@ -1,17 +1,20 @@
-import React, { FC, useRef, ChangeEvent, useState } from "react";
+import React, { FC, useContext, useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import CustomInput from "../components/inputs/CustomInput";
 import useErrorHandler from "../hooks/useErrorHandler";
 import useJournalistInputHandler from "../hooks/useJournalistInputHandler";
-
-interface AddJournalistType {
-  first_name: string;
-  last_name: string;
-  position: string;
-  course: string;
-  photo: string;
-}
+import AuthContext from "../store/auth-context";
 
 const AddJournalist: FC = () => {
+  const context = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!context?.isLoggedIn) {
+      navigate("/login");
+    }
+  }, [context?.isLoggedIn]);
+
   const { journalistDetails, onInputChangeHandler, onSelectedItemHandler } =
     useJournalistInputHandler();
   const { errors, onErrorOccured, onRemoveError } = useErrorHandler();

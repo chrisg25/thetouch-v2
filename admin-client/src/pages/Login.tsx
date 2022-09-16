@@ -1,12 +1,39 @@
-import React from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import userLogo from "../assets/user-solid.svg";
 import passwordLogo from "../assets/key-solid.svg";
-import Header from "../components/layout/Header";
 import touchIcon from "../assets/touch-icon.png";
+import AuthContext from "../store/auth-context";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const context = useContext(AuthContext);
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    if (context?.isLoggedIn) {
+      navigate("/add-articles");
+      console.log("check");
+    }
+  }, [context?.isLoggedIn]);
+
+  const onInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setCredentials((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const login = () => {
+    context?.onLogin(credentials);
+  };
+
   return (
     <>
+      {console.log(context?.isLoggedIn, "state")}
       <header
         className="header"
         style={{ display: "flex", alignItems: "center" }}
@@ -26,9 +53,11 @@ const Login = () => {
               <img src={userLogo} alt="" />
             </div>
             <input
+              name="username"
               className="login__input"
               type={"text"}
               placeholder="Username"
+              onChange={onInputChangeHandler}
             />
           </div>
           <div className="login__input-container">
@@ -36,12 +65,16 @@ const Login = () => {
               <img src={passwordLogo} alt="" />
             </div>
             <input
+              name="password"
               className="login__input"
               type={"password"}
               placeholder="Password"
+              onChange={onInputChangeHandler}
             />
           </div>
-          <button className="login__button">LOGIN</button>
+          <button className="login__button" onClick={login}>
+            LOGIN
+          </button>
         </section>
       </div>
       <footer className="login__footer">

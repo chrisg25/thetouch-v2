@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CustomInput from "../components/inputs/CustomInput";
 import useArticleInputHandler from "../hooks/useArticleInputHandler";
 import useErrorHandler from "../hooks/useErrorHandler";
 import * as dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../store/auth-context";
 
 const AddArticle = () => {
+  const context = useContext(AuthContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!context?.isLoggedIn) {
+      navigate("/login");
+    }
+  }, [context?.isLoggedIn]);
   const {
     articleDetails,
     hasCustomDate,
