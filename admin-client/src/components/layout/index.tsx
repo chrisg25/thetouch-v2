@@ -8,6 +8,7 @@ const Layout: FC<{ children?: any }> = ({ children }) => {
     <>
       <Sidebar />
       <Header />
+      {children}
       <Outlet />
     </>
   );
