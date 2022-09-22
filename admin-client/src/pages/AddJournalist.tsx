@@ -4,6 +4,7 @@ import CustomInput from "../components/inputs/CustomInput";
 import useErrorHandler from "../hooks/useErrorHandler";
 import useJournalistInputHandler from "../hooks/useJournalistInputHandler";
 import AuthContext from "../store/auth-context";
+import Layout from "../components/layout";
 
 const AddJournalist: FC = () => {
   const context = useContext(AuthContext);
@@ -53,60 +54,65 @@ const AddJournalist: FC = () => {
   };
 
   return (
-    <div className="add-articles">
-      <CustomInput
-        value={journalistDetails.first_name}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="First Name"
-        inputName="first_name"
-        type="text"
-        errors={errors}
-        onRemoveError={onRemoveError}
-      />
-      <CustomInput
-        value={journalistDetails.last_name}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Last Name"
-        inputName="last_name"
-        type="text"
-        errors={errors}
-        onRemoveError={onRemoveError}
-      />
-      <CustomInput
-        value={journalistDetails.course}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Course"
-        inputName="course"
-        type="dropdown"
-        errors={errors}
-        onRemoveError={onRemoveError}
-        onSelectedItemHandler={onSelectedItemHandler}
-      />
-      <CustomInput
-        value={journalistDetails.position}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Position"
-        inputName="position"
-        type="dropdown"
-        errors={errors}
-        onRemoveError={onRemoveError}
-        onSelectedItemHandler={onSelectedItemHandler}
-      />
-      <CustomInput
-        photos={journalistDetails.photos}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Photos"
-        inputName="photos"
-        type="file"
-        errors={errors}
-        onRemoveError={onRemoveError}
-        singlePhoto={true}
-      />
-      <button className="add-articles__button" onClick={() => addJournalist()}>
-        Add Article
-      </button>
-      <button className="add-articles__button">Clear Fields</button>
-    </div>
+    <Layout>
+      <div className="add-articles">
+        <CustomInput
+          value={journalistDetails.first_name}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="First Name"
+          inputName="first_name"
+          type="text"
+          errors={errors}
+          onRemoveError={onRemoveError}
+        />
+        <CustomInput
+          value={journalistDetails.last_name}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Last Name"
+          inputName="last_name"
+          type="text"
+          errors={errors}
+          onRemoveError={onRemoveError}
+        />
+        <CustomInput
+          value={journalistDetails.course}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Course"
+          inputName="course"
+          type="dropdown"
+          errors={errors}
+          onRemoveError={onRemoveError}
+          onSelectedItemHandler={onSelectedItemHandler}
+        />
+        <CustomInput
+          value={journalistDetails.position}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Position"
+          inputName="position"
+          type="dropdown"
+          errors={errors}
+          onRemoveError={onRemoveError}
+          onSelectedItemHandler={onSelectedItemHandler}
+        />
+        <CustomInput
+          photos={journalistDetails.photos}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Photos"
+          inputName="photos"
+          type="file"
+          errors={errors}
+          onRemoveError={onRemoveError}
+          singlePhoto={true}
+        />
+        <button
+          className="add-articles__button"
+          onClick={() => addJournalist()}
+        >
+          Add Article
+        </button>
+        <button className="add-articles__button">Clear Fields</button>
+      </div>
+    </Layout>
   );
 };
 

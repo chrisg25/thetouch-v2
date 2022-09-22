@@ -5,6 +5,7 @@ import useErrorHandler from "../hooks/useErrorHandler";
 import * as dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../store/auth-context";
+import Layout from "../components/layout";
 
 const AddArticle = () => {
   const context = useContext(AuthContext);
@@ -95,81 +96,83 @@ const AddArticle = () => {
   };
 
   return (
-    <div className="add-articles">
-      <CustomInput
-        value={articleDetails.category}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Category"
-        inputName="category"
-        type="text"
-        errors={errors}
-        onRemoveError={onRemoveError}
-      />
-      <CustomInput
-        value={articleDetails.headline}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Headline"
-        inputName="headline"
-        type="text"
-        errors={errors}
-        onRemoveError={onRemoveError}
-      />
-      <CustomInput
-        value={articleDetails.body}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Body"
-        inputName="body"
-        type="textarea"
-        errors={errors}
-        onRemoveError={onRemoveError}
-      />
-      <CustomInput
-        value={articleDetails.authored_by}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Author"
-        inputName="authored_by"
-        type="dropdown"
-        onSelectedItemHandler={onSelectedItemHandler}
-        errors={errors}
-        onRemoveError={onRemoveError}
-      />
-      <CustomInput
-        value={articleDetails.graphics_by}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Graphics Artist"
-        inputName="graphics_by"
-        type="dropdown"
-        onSelectedItemHandler={onSelectedItemHandler}
-        errors={errors}
-        onRemoveError={onRemoveError}
-      />
-      <CustomInput
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Graphics Artist"
-        inputName="graphics_by"
-        type="dateTime"
-        dateValue={articleDetails.date}
-        timeValue={articleDetails.time}
-        errors={errors}
-        hasCustomDate={hasCustomDate}
-        onHasCustomDateHandler={onHasCustomDateHandler}
-        onRemoveError={onRemoveError}
-      />
-      <CustomInput
-        photos={articleDetails.photos}
-        onChange={onInputChangeHandler}
-        labelPlaceholder="Photos"
-        inputName="photos"
-        type="file"
-        onRemovePhoto={onRemovePhoto}
-        errors={errors}
-        onRemoveError={onRemoveError}
-      />
-      <button className="add-articles__button" onClick={() => addArticle()}>
-        Add Article
-      </button>
-      <button className="add-articles__button">Clear Fields</button>
-    </div>
+    <Layout>
+      <div className="add-articles">
+        <CustomInput
+          value={articleDetails.category}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Category"
+          inputName="category"
+          type="text"
+          errors={errors}
+          onRemoveError={onRemoveError}
+        />
+        <CustomInput
+          value={articleDetails.headline}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Headline"
+          inputName="headline"
+          type="text"
+          errors={errors}
+          onRemoveError={onRemoveError}
+        />
+        <CustomInput
+          value={articleDetails.body}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Body"
+          inputName="body"
+          type="textarea"
+          errors={errors}
+          onRemoveError={onRemoveError}
+        />
+        <CustomInput
+          value={articleDetails.authored_by}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Author"
+          inputName="authored_by"
+          type="dropdown"
+          onSelectedItemHandler={onSelectedItemHandler}
+          errors={errors}
+          onRemoveError={onRemoveError}
+        />
+        <CustomInput
+          value={articleDetails.graphics_by}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Graphics Artist"
+          inputName="graphics_by"
+          type="dropdown"
+          onSelectedItemHandler={onSelectedItemHandler}
+          errors={errors}
+          onRemoveError={onRemoveError}
+        />
+        <CustomInput
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Graphics Artist"
+          inputName="graphics_by"
+          type="dateTime"
+          dateValue={articleDetails.date}
+          timeValue={articleDetails.time}
+          errors={errors}
+          hasCustomDate={hasCustomDate}
+          onHasCustomDateHandler={onHasCustomDateHandler}
+          onRemoveError={onRemoveError}
+        />
+        <CustomInput
+          photos={articleDetails.photos}
+          onChange={onInputChangeHandler}
+          labelPlaceholder="Photos"
+          inputName="photos"
+          type="file"
+          onRemovePhoto={onRemovePhoto}
+          errors={errors}
+          onRemoveError={onRemoveError}
+        />
+        <button className="add-articles__button" onClick={() => addArticle()}>
+          Add Article
+        </button>
+        <button className="add-articles__button">Clear Fields</button>
+      </div>
+    </Layout>
   );
 };
 
