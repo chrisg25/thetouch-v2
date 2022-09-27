@@ -1,0 +1,53 @@
+.home {
+  padding-top: 80px;
+  padding-left: 110px;
+  padding-right: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 500px);
+  gap: 30px;
+
+  &__article-item {
+    height: 142px;
+
+    display: flex;
+  }
+
+  &__article-title {
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 9px;
+  }
+
+  &__article-author {
+    font-size: 10px;
+    font-weight: light;
+    margin-left: 9px;
+  }
+
+  &__buttons-container {
+    display: flex;
+    height: 75%;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    @media screen and (max-width: 1000px) {
+      height: 64%;
+    }
+    button {
+      border: none;
+      width: 50px;
+      height: 25px;
+      font-size: 10px;
+      &:hover {
+        cursor: pointer;
+      }
+      &:nth-of-type(1) {
+        background-color: $accent-clr;
+      }
+      &:nth-of-type(2) {
+        margin-left: 10px;
+        background-color: $red-100;
+      }
+    }
+  }
+}
