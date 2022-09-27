@@ -15,7 +15,7 @@ const Login = () => {
 
   useEffect(() => {
     if (context?.isLoggedIn) {
-      navigate("/add-articles");
+      navigate("/");
       console.log("check");
     }
   }, [context?.isLoggedIn]);
