@@ -4,6 +4,7 @@ export interface PhotoType {
 }
 
 export interface ArticleType {
+  id?: number;
   category: string;
   headline: string;
   body: string;
