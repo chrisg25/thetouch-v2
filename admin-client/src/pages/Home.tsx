@@ -1,77 +1,66 @@
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../components/layout";
+import AuthContext from "../store/auth-context";
+import { ArticleType } from "../types";
 
 const Home = () => {
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [articles, setArticles] = useState<ArticleType[]>([]);
+  const [fetchError, setFetchError] = useState<boolean>(false);
+
+  // check if user is authenticated
+  useEffect(() => {
+    if (authContext?.isLoggedIn !== true) {
+      navigate("/login");
+    }
+  }, [authContext?.isLoggedIn]);
+
+  // Fetch articles on page load
+  const fetchdArticles = async () => {
+    try {
+      const res = (await fetch(
+        "http://localhost:5000/articles/pagination/1"
+      )) as any;
+      const data: ArticleType[] = await res.json();
+
+      setArticles(() => [...data]);
+    } catch (error) {
+      setFetchError((prevErr) => !prevErr);
+    }
+  };
+  useEffect(() => {
+    fetchdArticles();
+  }, []);
+
   return (
     <Layout>
       <div className="home">
         {/* Item */}
-        <div className="home__article-item">
-          <div style={{ width: "122px" }}>
-            <img
-              style={{ width: "100%", height: "142px", objectFit: "cover" }}
-              className="home__article-item-photo"
-              src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
-              alt=""
-            />
-          </div>
+        {articles.map((article) => {
+          return (
+            <div className="home__article-item" key={article.id}>
+              <div style={{ width: "122px" }}>
+                <img
+                  style={{ width: "100%", height: "142px", objectFit: "cover" }}
+                  className="home__article-item-photo"
+                  src={article.photos[0]?.url}
+                  alt=""
+                />
+              </div>
 
-          <div className="article-item-details">
-            <h1 className="home__article-title">
-              NEWS | Pub renewal: Ex-Adviser Malongo speaks
-            </h1>
-            <p className="home__article-author">by Lester Janito</p>
-            <div className="home__buttons-container">
-              <button>Edit</button>
-              <button>Delete</button>
+              <div className="article-item-details">
+                <h1 className="home__article-title">{article.headline}</h1>
+                <p className="home__article-author">{article.authored_by}</p>
+                <div className="home__buttons-container">
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-
-        {/* Item */}
-        <div className="home__article-item">
-          <div style={{ width: "122px" }}>
-            <img
-              style={{ width: "100%", height: "142px", objectFit: "cover" }}
-              className="home__article-item-photo"
-              src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
-              alt=""
-            />
-          </div>
-
-          <div className="article-item-details">
-            <h1 className="home__article-title">
-              NEWS | Pub renewal: Ex-Adviser Malongo speaks
-            </h1>
-            <p className="home__article-author">by Lester Janito</p>
-            <div className="home__buttons-container">
-              <button>Edit</button>
-              <button>Delete</button>
-            </div>
-          </div>
-        </div>
-
-        {/* Item */}
-        <div className="home__article-item">
-          <div style={{ width: "122px" }}>
-            <img
-              style={{ width: "100%", height: "142px", objectFit: "cover" }}
-              className="home__article-item-photo"
-              src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
-              alt=""
-            />
-          </div>
-
-          <div className="article-item-details">
-            <h1 className="home__article-title">
-              NEWS | Pub renewal: Ex-Adviser Malongo speaks
-            </h1>
-            <p className="home__article-author">by Lester Janito</p>
-            <div className="home__buttons-container">
-              <button>Edit</button>
-              <button>Delete</button>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </Layout>
   );
