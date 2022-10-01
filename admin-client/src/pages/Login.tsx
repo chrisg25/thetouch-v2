@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import userLogo from "../assets/user-solid.svg";
 import passwordLogo from "../assets/key-solid.svg";
+// import touchIcon from "../assets/touch-icon.png";
 import touchIcon from "../assets/touch-icon.png";
 import AuthContext from "../store/auth-context";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -16,7 +17,6 @@ const Login = () => {
   useEffect(() => {
     if (context?.isLoggedIn) {
       navigate("/");
-      console.log("check");
     }
   }, [context?.isLoggedIn]);
 
@@ -33,7 +33,6 @@ const Login = () => {
 
   return (
     <>
-      {console.log(context?.isLoggedIn, "state")}
       <header
         className="header"
         style={{ display: "flex", alignItems: "center" }}
