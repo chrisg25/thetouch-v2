@@ -8,8 +8,9 @@
 
   &__article-item {
     height: 142px;
-
+    width: 90%;
     display: flex;
+    position: relative;
   }
 
   &__article-title {
@@ -26,10 +27,11 @@
 
   &__buttons-container {
     display: flex;
-    height: 75%;
     align-items: flex-end;
     justify-content: flex-end;
-
+    position: absolute;
+    bottom: 0;
+    right: 0;
     @media screen and (max-width: 1000px) {
       height: 64%;
     }
