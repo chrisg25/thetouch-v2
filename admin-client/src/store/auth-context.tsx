@@ -33,7 +33,6 @@ export const AuthContextProvider: FC<{ children: any }> = ({ children }) => {
         body: JSON.stringify(credentials),
       });
       const token = await res.json();
-      console.log(token, "token");
       localStorage.setItem("admin_token_tt", token?.access_token);
       setIsLoggedIn((prevState) => true);
     } catch (error: any) {
