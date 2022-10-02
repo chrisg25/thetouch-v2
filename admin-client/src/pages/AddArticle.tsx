@@ -81,11 +81,12 @@ const AddArticle = () => {
       };
       delete body.date;
       delete body.time;
-      console.log(body.createdAt, "body");
+      const token = localStorage.getItem("admin_token_tt");
       const response = await fetch("http://localhost:5000/articles", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(body),
       });
