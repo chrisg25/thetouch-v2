@@ -21,7 +21,7 @@ const Home = () => {
   const fetchdArticles = async () => {
     try {
       const res = (await fetch(
-        "http://localhost:5000/articles/pagination/1"
+        "http://localhost:5000/articles/pagination/0"
       )) as any;
       const data: ArticleType[] = await res.json();
 
@@ -45,7 +45,7 @@ const Home = () => {
                 <img
                   style={{ width: "100%", height: "142px", objectFit: "cover" }}
                   className="home__article-item-photo"
-                  src={article.photos[0]?.url}
+                  src={`${article.photos[0]?.url}`}
                   alt=""
                 />
               </div>
