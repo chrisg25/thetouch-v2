@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CustomInput from "../components/inputs/CustomInput";
 import useArticleInputHandler from "../hooks/useArticleInputHandler";
 import useErrorHandler from "../hooks/useErrorHandler";
@@ -6,6 +6,7 @@ import * as dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../store/auth-context";
 import Layout from "../components/layout";
+import Spinner from "../components/spinner";
 
 const AddArticle = () => {
   const context = useContext(AuthContext);
@@ -26,6 +27,8 @@ const AddArticle = () => {
   } = useArticleInputHandler();
 
   const { errors, onErrorOccured, onRemoveError } = useErrorHandler();
+
+  const [addingArticle, sestIsAddingArticle] = useState<boolean>(false);
 
   const inputValidator = (): boolean => {
     let isValidated = true;
@@ -83,6 +86,7 @@ const AddArticle = () => {
       delete body.date;
       delete body.time;
       const token = localStorage.getItem("admin_token_tt");
+      sestIsAddingArticle((prevState) => true);
       const response = await fetch("http://localhost:5000/articles", {
         method: "POST",
         headers: {
@@ -95,9 +99,8 @@ const AddArticle = () => {
     } else {
       return;
     }
+    sestIsAddingArticle((prevState) => false);
   };
-
-  const clearFields = () => {};
 
   return (
     <Layout>
@@ -171,15 +174,24 @@ const AddArticle = () => {
           errors={errors}
           onRemoveError={onRemoveError}
         />
-        <button className="add-articles__button" onClick={() => addArticle()}>
-          Add Article
-        </button>
-        <button
-          className="add-articles__button"
-          onClick={() => onClearInputFields()}
-        >
-          Clear Fields
-        </button>
+        {!addingArticle ? (
+          <>
+            <button
+              className="add-articles__button"
+              onClick={() => addArticle()}
+            >
+              Add Article
+            </button>
+            <button
+              className="add-articles__button"
+              onClick={() => onClearInputFields()}
+            >
+              Clear Fields
+            </button>
+          </>
+        ) : (
+          <Spinner />
+        )}
       </div>
     </Layout>
   );
