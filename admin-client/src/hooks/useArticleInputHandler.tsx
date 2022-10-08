@@ -89,6 +89,22 @@ const useInputHandler = () => {
     setHasCustomDate((prevState) => !prevState);
   };
 
+  const onClearInputFields = () => {
+    setArticleDetails((prevDetails) => ({
+      ...prevDetails,
+      category: "",
+      headline: "",
+      body: "",
+      authored_by: "",
+      authored_by_id: null,
+      graphics_by: "",
+      graphics_by_id: null,
+      photos: [],
+      date: "",
+      time: "",
+    }));
+  };
+
   return {
     articleDetails,
     hasCustomDate,
@@ -97,6 +113,7 @@ const useInputHandler = () => {
     onRemovePhoto,
     onClearDateTimeValues,
     onHasCustomDateHandler,
+    onClearInputFields,
   };
 };
 

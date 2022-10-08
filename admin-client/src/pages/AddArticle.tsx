@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import CustomInput from "../components/inputs/CustomInput";
 import useArticleInputHandler from "../hooks/useArticleInputHandler";
 import useErrorHandler from "../hooks/useErrorHandler";
@@ -22,6 +22,7 @@ const AddArticle = () => {
     onRemovePhoto,
     onSelectedItemHandler,
     onHasCustomDateHandler,
+    onClearInputFields,
   } = useArticleInputHandler();
 
   const { errors, onErrorOccured, onRemoveError } = useErrorHandler();
@@ -95,6 +96,8 @@ const AddArticle = () => {
       return;
     }
   };
+
+  const clearFields = () => {};
 
   return (
     <Layout>
@@ -171,7 +174,12 @@ const AddArticle = () => {
         <button className="add-articles__button" onClick={() => addArticle()}>
           Add Article
         </button>
-        <button className="add-articles__button">Clear Fields</button>
+        <button
+          className="add-articles__button"
+          onClick={() => onClearInputFields()}
+        >
+          Clear Fields
+        </button>
       </div>
     </Layout>
   );
