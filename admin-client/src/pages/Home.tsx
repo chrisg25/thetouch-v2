@@ -12,25 +12,25 @@ const Home = () => {
 
   // check if user is authenticated
   useEffect(() => {
-    if (authContext?.isLoggedIn !== true) {
+    if (!authContext?.isLoggedIn) {
       navigate("/login");
     }
   }, [authContext?.isLoggedIn]);
 
   // Fetch articles on page load
-  const fetchdArticles = async () => {
-    try {
-      const res = (await fetch(
-        "http://localhost:5000/articles/pagination/0"
-      )) as any;
-      const data: ArticleType[] = await res.json();
-
-      setArticles(() => [...data]);
-    } catch (error) {
-      setFetchError((prevErr) => !prevErr);
-    }
-  };
   useEffect(() => {
+    const fetchdArticles = async () => {
+      try {
+        const res = (await fetch(
+          "http://localhost:5000/articles/pagination/0"
+        )) as any;
+        const data: ArticleType[] = await res.json();
+
+        setArticles(() => [...data]);
+      } catch (error) {
+        setFetchError((prevErr) => !prevErr);
+      }
+    };
     fetchdArticles();
   }, []);
 
