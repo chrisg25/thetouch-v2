@@ -12,12 +12,21 @@ export const AuthContextProvider: FC<{ children: any }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
-    const storedUserLoggedInInformation =
-      localStorage.getItem("admin_token_tt");
-
-    if (storedUserLoggedInInformation) {
-      setIsLoggedIn(true);
-    }
+    const authorizeUser = async () => {
+      const response = await fetch("http://localhost:5000/auth", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("admin_token_tt")}`,
+        },
+      });
+      const data = await response.json();
+      if (data.statusCode !== 401) {
+        setIsLoggedIn(true);
+      } else {
+        localStorage.removeItem("admin_token_tt");
+      }
+    };
+    authorizeUser().catch((e) => console.log(e));
   }, []);
 
   const onLogin = async (credentials: {
