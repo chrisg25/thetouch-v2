@@ -1,0 +1,15 @@
+.upload-status {
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  width: 100%;
+  background-color: greenyellow;
+  padding-left: 50px;
+
+  h1 {
+    margin-top: 10px;
+  }
+}
