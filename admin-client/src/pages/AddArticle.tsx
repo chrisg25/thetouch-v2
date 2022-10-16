@@ -107,6 +107,9 @@ const AddArticle = () => {
         }, 4000);
         setSuccessUploading((prevState) => true);
       } catch (error) {
+        setTimeout(() => {
+          setErrorUploading((prevState) => false);
+        }, 4000);
         setErrorUploading((prevState) => true);
       }
     } else {
@@ -207,10 +210,13 @@ const AddArticle = () => {
         )}
       </div>
       {successUploading && (
-        <div className="upload-status">
-          <h1>
-            {successUploading ? "SuccessfullyUploaded" : "Error uploading!"}
-          </h1>
+        <div className="upload-status__success">
+          <h1>Successfully Uploaded</h1>
+        </div>
+      )}
+      {errorUploading && (
+        <div className="upload-status__error">
+          <h1>Error uploading article</h1>
         </div>
       )}
     </Layout>

@@ -1,15 +1,29 @@
 .upload-status {
-  position: fixed;
-  z-index: 100;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-  width: 100%;
-  background-color: greenyellow;
-  padding-left: 50px;
-
   h1 {
     margin-top: 10px;
+  }
+
+  &__error {
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    width: 100%;
+    padding-left: 50px;
+    background-color: crimson;
+  }
+
+  &__success {
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    width: 100%;
+    padding-left: 50px;
+    background-color: greenyellow;
   }
 }
