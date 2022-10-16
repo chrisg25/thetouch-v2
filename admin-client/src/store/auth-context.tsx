@@ -30,7 +30,7 @@ export const AuthContextProvider: FC<{ children: any }> = ({ children }) => {
           setIsLoggedIn((prevState) => false);
         }
       } catch (error) {
-        setIsLoggedIn((prevState) => true);
+        console.error(error);
       }
     };
 
