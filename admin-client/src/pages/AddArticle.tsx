@@ -29,6 +29,8 @@ const AddArticle = () => {
   const { errors, onErrorOccured, onRemoveError } = useErrorHandler();
 
   const [addingArticle, sestIsAddingArticle] = useState<boolean>(false);
+  const [errorUploading, setErrorUploading] = useState<boolean>(false);
+  const [successUploading, setSuccessUploading] = useState<boolean>(false);
 
   const inputValidator = (): boolean => {
     let isValidated = true;
@@ -87,15 +89,26 @@ const AddArticle = () => {
       delete body.time;
       const token = localStorage.getItem("admin_token_tt");
       sestIsAddingArticle((prevState) => true);
-      const response = await fetch("http://localhost:5000/articles", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(body),
-      });
-      const data = await response.json();
+      try {
+        const response = await fetch("http://localhost:5000/articles", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(body),
+        });
+        if (response.status === 201) {
+          setErrorUploading((prevState) => false);
+        }
+        setTimeout(() => {
+          setSuccessUploading((prevState) => false);
+          onClearInputFields();
+        }, 4000);
+        setSuccessUploading((prevState) => true);
+      } catch (error) {
+        setErrorUploading((prevState) => true);
+      }
     } else {
       return;
     }
@@ -193,6 +206,13 @@ const AddArticle = () => {
           <Spinner />
         )}
       </div>
+      {successUploading && (
+        <div className="upload-status">
+          <h1>
+            {successUploading ? "SuccessfullyUploaded" : "Error uploading!"}
+          </h1>
+        </div>
+      )}
     </Layout>
   );
 };
