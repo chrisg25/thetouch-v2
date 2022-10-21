@@ -66,10 +66,22 @@ const useJournalistInputHandler = () => {
     }));
   };
 
+  const onClearInputFields = () => {
+    setJournalistDetails((prevState) => ({
+      ...prevState,
+      first_name: "",
+      last_name: "",
+      course: "",
+      position: "",
+      photos: [] as PhotoType[],
+    }));
+  };
+
   return {
     journalistDetails,
     onInputChangeHandler,
     onSelectedItemHandler,
+    onClearInputFields,
   };
 };
 
