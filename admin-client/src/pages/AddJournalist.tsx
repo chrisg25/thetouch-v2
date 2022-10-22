@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import CustomInput from "../components/inputs/CustomInput";
 import useErrorHandler from "../hooks/useErrorHandler";
@@ -10,14 +10,22 @@ const AddJournalist: FC = () => {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const [errorUploading, setErrorUploading] = useState<boolean>(false);
+  const [successUploading, setSuccessUploading] = useState<boolean>(false);
+  const [addingJournalist, setIsAddingJournalsit] = useState<boolean>(false);
+
   useEffect(() => {
     if (!context?.isLoggedIn) {
       navigate("/login");
     }
   }, [context?.isLoggedIn]);
 
-  const { journalistDetails, onInputChangeHandler, onSelectedItemHandler } =
-    useJournalistInputHandler();
+  const {
+    journalistDetails,
+    onInputChangeHandler,
+    onSelectedItemHandler,
+    onClearInputFields,
+  } = useJournalistInputHandler();
   const { errors, onErrorOccured, onRemoveError } = useErrorHandler();
 
   const inputValidator = (): boolean => {
@@ -49,8 +57,47 @@ const AddJournalist: FC = () => {
     return isValidated;
   };
 
-  const addJournalist = () => {
+  const addJournalist = async () => {
     const isValidated = inputValidator();
+
+    if (isValidated) {
+      let body = {
+        ...journalistDetails,
+      };
+      body = {
+        ...journalistDetails,
+        photos: journalistDetails.photos.map((photo) => photo.url) as any,
+      };
+
+      const token = localStorage.getItem("admin_token_tt");
+      setIsAddingJournalsit((prevState) => true);
+      try {
+        const response = await fetch("http://localhost:5000/articles", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(body),
+        });
+        if (response.status === 201) {
+          setErrorUploading((prevState) => false);
+        }
+        setTimeout(() => {
+          setSuccessUploading((prevState) => false);
+          onClearInputFields();
+        }, 4000);
+        setSuccessUploading((prevState) => true);
+      } catch (error) {
+        setTimeout(() => {
+          setErrorUploading((prevState) => false);
+        }, 4000);
+        setErrorUploading((prevState) => true);
+      }
+    } else {
+      return;
+    }
+    setIsAddingJournalsit((prevState) => false);
   };
 
   return (
@@ -110,8 +157,23 @@ const AddJournalist: FC = () => {
         >
           Add Article
         </button>
-        <button className="add-articles__button">Clear Fields</button>
+        <button
+          className="add-articles__button"
+          onClick={() => onClearInputFields()}
+        >
+          Clear Fields
+        </button>
       </div>
+      {successUploading && (
+        <div className="upload-status__success">
+          <h1>Successfully Uploaded</h1>
+        </div>
+      )}
+      {errorUploading && (
+        <div className="upload-status__error">
+          <h1>Error uploading article</h1>
+        </div>
+      )}
     </Layout>
   );
 };
