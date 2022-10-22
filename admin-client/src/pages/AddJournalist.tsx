@@ -153,18 +153,24 @@ const AddJournalist: FC = () => {
           onRemoveError={onRemoveError}
           singlePhoto={true}
         />
-        <button
-          className="add-articles__button"
-          onClick={() => addJournalist()}
-        >
-          Add Journalist
-        </button>
-        <button
-          className="add-articles__button"
-          onClick={() => onClearInputFields()}
-        >
-          Clear Fields
-        </button>
+        {!addingJournalist ? (
+          <>
+            <button
+              className="add-articles__button"
+              onClick={() => addJournalist()}
+            >
+              Add Journalist
+            </button>
+            <button
+              className="add-articles__button"
+              onClick={() => onClearInputFields()}
+            >
+              Clear Fields
+            </button>
+          </>
+        ) : (
+          <Spinner />
+        )}
       </div>
       {successUploading && (
         <div className="upload-status__success">
