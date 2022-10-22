@@ -5,6 +5,7 @@ import useErrorHandler from "../hooks/useErrorHandler";
 import useJournalistInputHandler from "../hooks/useJournalistInputHandler";
 import AuthContext from "../store/auth-context";
 import Layout from "../components/layout";
+import Spinner from "../components/spinner";
 
 const AddJournalist: FC = () => {
   const context = useContext(AuthContext);
@@ -66,13 +67,13 @@ const AddJournalist: FC = () => {
       };
       body = {
         ...journalistDetails,
-        photos: journalistDetails.photos.map((photo) => photo.url) as any,
-      };
+        photo: journalistDetails.photos[0].url,
+      } as any;
 
       const token = localStorage.getItem("admin_token_tt");
       setIsAddingJournalsit((prevState) => true);
       try {
-        const response = await fetch("http://localhost:5000/articles", {
+        const response = await fetch("http://localhost:5000/journalists", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -80,6 +81,7 @@ const AddJournalist: FC = () => {
           },
           body: JSON.stringify(body),
         });
+        console.log(await response.json(), "response");
         if (response.status === 201) {
           setErrorUploading((prevState) => false);
         }
@@ -155,7 +157,7 @@ const AddJournalist: FC = () => {
           className="add-articles__button"
           onClick={() => addJournalist()}
         >
-          Add Article
+          Add Journalist
         </button>
         <button
           className="add-articles__button"
