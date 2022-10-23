@@ -7,46 +7,50 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
   const location = useLocation();
-  return (
-    <div className="sidebar">
-      <nav className="sidebar__nav">
-        <ul>
-          <NavLink to={"/"}>
-            <li
-              className={`sidebar__nav-item ${
-                location.pathname === "/" ? "sidebar__nav-item-active" : ""
-              }`}
-            >
-              <HomeIcon />
-            </li>
-          </NavLink>
-          <NavLink to={"/add-articles"}>
-            <li
-              className={`sidebar__nav-item ${
-                location.pathname === "/add-articles"
-                  ? "sidebar__nav-item-active"
-                  : ""
-              }`}
-            >
-              <AddArticleIcon />
-            </li>
-          </NavLink>
-          <NavLink to={"/add-journalists"}>
-            <li
-              className={`sidebar__nav-item ${
-                location.pathname === "/add-journalists"
-                  ? "sidebar__nav-item-active"
-                  : ""
-              }`}
-            >
-              <AddJournalistIcon />
-            </li>
-          </NavLink>
-        </ul>
-        <img src={touchIcon} alt="touch-icon" />
-      </nav>
-    </div>
-  );
+
+  const component =
+    location.pathname !== "/login" ? (
+      <div className="sidebar">
+        <nav className="sidebar__nav">
+          <ul>
+            <NavLink to={"/"}>
+              <li
+                className={`sidebar__nav-item ${
+                  location.pathname === "/" ? "sidebar__nav-item-active" : ""
+                }`}
+              >
+                <HomeIcon />
+              </li>
+            </NavLink>
+            <NavLink to={"/add-articles"}>
+              <li
+                className={`sidebar__nav-item ${
+                  location.pathname === "/add-articles"
+                    ? "sidebar__nav-item-active"
+                    : ""
+                }`}
+              >
+                <AddArticleIcon />
+              </li>
+            </NavLink>
+            <NavLink to={"/add-journalists"}>
+              <li
+                className={`sidebar__nav-item ${
+                  location.pathname === "/add-journalists"
+                    ? "sidebar__nav-item-active"
+                    : ""
+                }`}
+              >
+                <AddJournalistIcon />
+              </li>
+            </NavLink>
+          </ul>
+          <img src={touchIcon} alt="touch-icon" />
+        </nav>
+      </div>
+    ) : null;
+
+  return component;
 };
 
 export default Sidebar;
