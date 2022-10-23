@@ -25,10 +25,7 @@ const Header = () => {
     ) : null;
 
   return (
-    <header
-      className="header"
-      style={{ display: "flex", alignItems: "center" }}
-    >
+    <header className="header">
       {headerLogo}
       <h1 className="header__title">
         The Touch Admin |{" "}
