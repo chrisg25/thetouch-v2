@@ -12,6 +12,11 @@
   background-color: $white-100;
   padding-right: 20px;
 
+  &__page-title {
+    display: flex;
+    align-items: center;
+  }
+
   &__title {
     font-weight: $fw-bold;
   }
