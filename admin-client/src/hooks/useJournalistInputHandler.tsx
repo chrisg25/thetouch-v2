@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { JournalistType, PhotoType } from "../types";
 import { v4 as uuid } from "uuid";
-import userPhotoPlaceHolder from "../assets/user-solid.svg";
 
 const useJournalistInputHandler = () => {
   const [journalistDetails, setJournalistDetails] = useState<JournalistType>({
