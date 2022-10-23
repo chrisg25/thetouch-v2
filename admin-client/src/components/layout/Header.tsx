@@ -32,7 +32,7 @@ const Header = () => {
         <span className="header__sub-title">{currPathName}</span>
       </h1>
       <div>
-        <button>Logout</button>
+        <button className="header__logout">Logout</button>
       </div>
     </header>
   );

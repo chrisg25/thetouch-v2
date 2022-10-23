@@ -10,6 +10,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: $white-100;
+  padding-right: 20px;
 
   &__title {
     font-weight: $fw-bold;
@@ -17,5 +18,19 @@
 
   &__sub-title {
     font-weight: normal;
+  }
+
+  &__logout {
+    outline: none;
+    border: none;
+    padding-inline: 20px;
+    padding-block: 5px;
+    background-color: $primary-clr;
+    color: $white-100;
+    border-radius: 3px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
