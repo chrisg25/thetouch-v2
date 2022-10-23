@@ -1,8 +1,6 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import userLogo from "../assets/user-solid.svg";
 import passwordLogo from "../assets/key-solid.svg";
-// import touchIcon from "../assets/touch-icon.png";
-import touchIcon from "../assets/touch-icon.png";
 import AuthContext from "../store/auth-context";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/layout";

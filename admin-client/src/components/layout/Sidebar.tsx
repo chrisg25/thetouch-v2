@@ -3,7 +3,7 @@ import AddArticleIcon from "../icons/AddArticleIcon";
 import AddJournalistIcon from "../icons/AddJournalistIcon";
 import HomeIcon from "../icons/HomeIcon";
 import touchIcon from "../../assets/touch-icon.png";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
   const location = useLocation();

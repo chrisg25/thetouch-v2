@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { v4 as uuid } from "uuid";
-import { ArticleType, ErrorType, PhotoType } from "../types";
+import { ArticleType, PhotoType } from "../types";
 
 const useInputHandler = () => {
   const [articleDetails, setArticleDetails] = useState<ArticleType>({

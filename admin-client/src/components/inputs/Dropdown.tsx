@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 const dummyJournalists: Array<{ id: number; name: string }> = [
   {
     id: 3,
