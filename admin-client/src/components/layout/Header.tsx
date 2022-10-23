@@ -21,7 +21,9 @@ const Header = () => {
   }, []);
 
   const logoutButton = context?.isLoggedIn ? (
-    <button className="header__logout">Logout</button>
+    <button className="header__logout" onClick={() => context.onLogOut()}>
+      Logout
+    </button>
   ) : (
     <div></div>
   );
