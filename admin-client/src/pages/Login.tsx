@@ -5,6 +5,7 @@ import passwordLogo from "../assets/key-solid.svg";
 import touchIcon from "../assets/touch-icon.png";
 import AuthContext from "../store/auth-context";
 import { useNavigate } from "react-router-dom";
+import Layout from "../components/layout";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,16 +33,7 @@ const Login = () => {
   };
 
   return (
-    <>
-      <header
-        className="header"
-        style={{ display: "flex", alignItems: "center" }}
-      >
-        <img src={touchIcon} alt="touch-icon" style={{ marginRight: "20px" }} />
-        <h1 className="header__title">
-          The Touch Admin | <span className="header__sub-title">Login</span>
-        </h1>
-      </header>
+    <Layout>
       <div className="login">
         <section>
           <h1 className="login__title">
@@ -79,7 +71,7 @@ const Login = () => {
       <footer className="login__footer">
         <h1>All Rights Reserved</h1>
       </footer>
-    </>
+    </Layout>
   );
 };
 
