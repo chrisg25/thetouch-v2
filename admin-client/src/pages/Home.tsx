@@ -34,6 +34,24 @@ const Home = () => {
     fetchdArticles();
   }, []);
 
+  const onDeleteArticle = async (articleId: number) => {
+    const token = localStorage.getItem("admin_token_tt");
+    try {
+      const res = (await fetch(`http://localhost:5000/articles/${articleId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })) as any;
+      setArticles((prevState) =>
+        prevState.filter((article) => article.id !== articleId)
+      );
+    } catch (error) {
+      setFetchError((prevErr) => !prevErr);
+    }
+  };
+
   return (
     <Layout>
       <div className="home">
@@ -55,7 +73,9 @@ const Home = () => {
                 <p className="home__article-author">{article.authored_by}</p>
                 <div className="home__buttons-container">
                   <button>Edit</button>
-                  <button>Delete</button>
+                  <button onClick={() => onDeleteArticle(article.id as number)}>
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>
