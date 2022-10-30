@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../components/layout";
 import AuthContext from "../store/auth-context";
 import { ArticleType } from "../types";
+import Spinner from "../components/spinner";
 
 const Home = () => {
   const authContext = useContext(AuthContext);
@@ -10,6 +11,10 @@ const Home = () => {
   const [articles, setArticles] = useState<ArticleType[]>([]);
   const [fetchError, setFetchError] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [toBeDeletedArticle, setToBeDeletedArticle] = useState<number | null>(
+    null
+  );
 
   // check if user is authenticated
   useEffect(() => {
@@ -36,21 +41,37 @@ const Home = () => {
   }, []);
 
   const onDeleteArticle = async (articleId: number) => {
+    setToBeDeletedArticle(articleId);
+    setShowModal((prevState) => !prevState);
+  };
+
+  const onConfirimedDeleteArticle = async () => {
     const token = localStorage.getItem("admin_token_tt");
+
     try {
-      const res = (await fetch(`http://localhost:5000/articles/${articleId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })) as any;
+      setIsDeleting((prevState) => true);
+      const res = (await fetch(
+        `http://localhost:5000/articles/${toBeDeletedArticle}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )) as any;
       setArticles((prevState) =>
-        prevState.filter((article) => article.id !== articleId)
+        prevState.filter((article) => article.id !== toBeDeletedArticle)
       );
+      setIsDeleting((prevState) => false);
+      setShowModal((prevState) => !prevState);
     } catch (error) {
       setFetchError((prevErr) => !prevErr);
     }
+  };
+
+  const onCancelDeletion = () => {
+    setToBeDeletedArticle(null);
   };
 
   return (
@@ -62,8 +83,24 @@ const Home = () => {
               Are you sure you want to delete this article?
             </h1>
             <div className="prompt__actions-container">
-              <button className="prompt__action prompt__yes">Yes</button>
-              <button className="prompt__action prompt__no">No</button>
+              {!isDeleting ? (
+                <>
+                  <button
+                    className="prompt__action prompt__yes"
+                    onClick={() => onConfirimedDeleteArticle()}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className="prompt__action prompt__no"
+                    onClick={() => onCancelDeletion()}
+                  >
+                    No
+                  </button>
+                </>
+              ) : (
+                <Spinner />
+              )}
             </div>
           </div>
         </div>
