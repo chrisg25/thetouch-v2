@@ -9,6 +9,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [articles, setArticles] = useState<ArticleType[]>([]);
   const [fetchError, setFetchError] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   // check if user is authenticated
   useEffect(() => {
@@ -54,6 +55,19 @@ const Home = () => {
 
   return (
     <Layout>
+      {showModal && (
+        <div className="backdrop">
+          <div className="prompt">
+            <h1 className="prompt__message">
+              Are you sure you want to delete this article?
+            </h1>
+            <div className="prompt__actions-container">
+              <button className="prompt__action prompt__yes">Yes</button>
+              <button className="prompt__action prompt__no">No</button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="home">
         {/* Item */}
         {articles.map((article) => {
