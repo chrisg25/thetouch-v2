@@ -72,6 +72,7 @@ const Home = () => {
 
   const onCancelDeletion = () => {
     setToBeDeletedArticle(null);
+    setShowModal((prevState) => false);
   };
 
   return (
