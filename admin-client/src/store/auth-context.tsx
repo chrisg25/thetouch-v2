@@ -2,15 +2,17 @@ import React, { FC, useEffect, useState } from "react";
 
 export interface IAuth {
   isLoggedIn: boolean;
+  hasError: boolean;
   onLogin: (credentials: { username: string; password: string }) => void;
   onLogOut: () => void;
-  test: string;
+  removeError: () => void;
 }
 
 const AuthContext = React.createContext<IAuth | null>(null);
 
 export const AuthContextProvider: FC<{ children: any }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   useEffect(() => {
     const authorizeUser = async () => {
@@ -30,7 +32,7 @@ export const AuthContextProvider: FC<{ children: any }> = ({ children }) => {
           setIsLoggedIn((prevState) => false);
         }
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
 
@@ -55,8 +57,7 @@ export const AuthContextProvider: FC<{ children: any }> = ({ children }) => {
         setIsLoggedIn(true);
       }
     } catch (error: any) {
-      if (error) {
-      }
+      setHasError((prevState) => true);
     }
   };
 
@@ -64,13 +65,19 @@ export const AuthContextProvider: FC<{ children: any }> = ({ children }) => {
     setIsLoggedIn((prevState) => false);
     localStorage.removeItem("admin_token_tt");
   };
+
+  const removeError = () => {
+    setHasError((prevState) => false);
+  };
+
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn,
+        hasError,
         onLogin,
         onLogOut,
-        test: "wtf is not working?",
+        removeError,
       }}
     >
       {children}

@@ -47,6 +47,7 @@ const Login = () => {
               type={"text"}
               placeholder="Username"
               onChange={onInputChangeHandler}
+              onFocus={() => context?.removeError()}
             />
           </div>
           <div className="login__input-container">
@@ -59,9 +60,19 @@ const Login = () => {
               type={"password"}
               placeholder="Password"
               onChange={onInputChangeHandler}
+              onFocus={() => context?.removeError()}
             />
           </div>
-          <button className="login__button" onClick={login}>
+          <div>
+            {context?.hasError && (
+              <p className="login__error-message">Server is down!</p>
+            )}
+          </div>
+          <button
+            style={{ marginTop: `${context?.hasError ? "0px" : "29px"}` }}
+            className="login__button"
+            onClick={login}
+          >
             LOGIN
           </button>
         </section>
