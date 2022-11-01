@@ -17,12 +17,16 @@ const useInputHandler = () => {
     time: "",
   });
 
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
   // state for showing custom date and time input
   const [hasCustomDate, setHasCustomDate] = useState<boolean>(false);
   useEffect(() => {
     // Fetch Article Details to be edited
-  }, [pathname]);
+    setArticleDetails((prevState) => ({
+      ...prevState,
+      ...(state as ArticleType),
+    }));
+  }, [pathname, state]);
 
   // Function for change handling
   const onInputChangeHandler = (

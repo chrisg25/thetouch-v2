@@ -45,6 +45,12 @@ const Home = () => {
     setShowModal((prevState) => !prevState);
   };
 
+  const onEditArticle = (articleDetails: any) => {
+    navigate("/add-articles", {
+      state: articleDetails,
+    });
+  };
+
   const onConfirimedDeleteArticle = async () => {
     const token = localStorage.getItem("admin_token_tt");
 
@@ -124,7 +130,7 @@ const Home = () => {
                 <h1 className="home__article-title">{article.headline}</h1>
                 <p className="home__article-author">{article.authored_by}</p>
                 <div className="home__buttons-container">
-                  <button>Edit</button>
+                  <button onClick={() => onEditArticle(article)}>Edit</button>
                   <button onClick={() => onDeleteArticle(article.id as number)}>
                     Delete
                   </button>
