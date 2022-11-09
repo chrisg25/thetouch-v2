@@ -39,7 +39,7 @@ const Header = () => {
         <div className="header__page-title">
           {headerLogo}
           <h1 className="header__title">
-            The Touch Admin |
+            The Touch Admin |{" "}
             <span className="header__sub-title">{currPathName}</span>
           </h1>
         </div>
