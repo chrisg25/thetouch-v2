@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import CustomInput from "../components/inputs/CustomInput";
-import useErrorHandler from "../hooks/useErrorHandler";
+import useErrorHandler from "../hooks/useInputErrorHandler";
 import useJournalistInputHandler from "../hooks/useJournalistInputHandler";
 import AuthContext from "../store/auth-context";
 import Layout from "../components/layout";
@@ -81,7 +81,6 @@ const AddJournalist: FC = () => {
           },
           body: JSON.stringify(body),
         });
-        console.log(await response.json(), "response");
         if (response.status === 201) {
           setErrorUploading((prevState) => false);
         }

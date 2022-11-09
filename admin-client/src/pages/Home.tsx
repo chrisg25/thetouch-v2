@@ -5,6 +5,7 @@ import AuthContext from "../store/auth-context";
 import { ArticleType } from "../types";
 import Spinner from "../components/spinner";
 
+const TOKEN = localStorage.getItem("admin_token_tt");
 const Home = () => {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
@@ -27,11 +28,8 @@ const Home = () => {
   useEffect(() => {
     const fetchdArticles = async () => {
       try {
-        const res = (await fetch(
-          "http://localhost:5000/articles/pagination/0"
-        )) as any;
+        const res = await fetch("http://localhost:5000/articles/pagination/0");
         const data: ArticleType[] = await res.json();
-
         setArticles(() => [...data]);
       } catch (error) {
         setFetchError((prevErr) => !prevErr);
@@ -52,20 +50,15 @@ const Home = () => {
   };
 
   const onConfirimedDeleteArticle = async () => {
-    const token = localStorage.getItem("admin_token_tt");
-
     try {
       setIsDeleting((prevState) => true);
-      const res = (await fetch(
-        `http://localhost:5000/articles/${toBeDeletedArticle}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )) as any;
+      await fetch(`http://localhost:5000/articles/${toBeDeletedArticle}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      });
       setArticles((prevState) =>
         prevState.filter((article) => article.id !== toBeDeletedArticle)
       );

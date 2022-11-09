@@ -57,8 +57,6 @@ const useJournalistInputHandler = () => {
     name: string,
     id?: number
   ) => {
-    console.log(inputName, "input name");
-    console.log(name, "name");
     setJournalistDetails((prevState) => ({
       ...prevState,
       [inputName]: name,
