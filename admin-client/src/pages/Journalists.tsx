@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../components/layout";
+import AuthContext from "../store/auth-context";
 
 const Journalists = () => {
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!authContext?.isLoggedIn) {
+      navigate("/login");
+    }
+  }, [authContext?.isLoggedIn]);
   return (
     <Layout>
       <div className="journalists">
