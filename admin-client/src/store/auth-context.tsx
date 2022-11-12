@@ -30,9 +30,11 @@ export const AuthContextProvider: FC<{ children: any }> = ({ children }) => {
         }
         if (response.status === 401) {
           setIsLoggedIn((prevState) => false);
+          localStorage.removeItem("admin_token_tt");
         }
       } catch (error) {
         console.log(error);
+        localStorage.removeItem("admin_token_tt");
       }
     };
 
