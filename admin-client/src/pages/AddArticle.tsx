@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import CustomInput from "../components/inputs/CustomInput";
 import useArticleInputHandler from "../hooks/useArticleInputHandler";
-import useErrorHandler from "../hooks/useInputErrorHandler";
+import useErrorHandler from "../hooks/useErrorHandler";
 import * as dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../store/auth-context";
