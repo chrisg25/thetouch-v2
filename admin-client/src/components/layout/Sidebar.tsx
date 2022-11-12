@@ -4,6 +4,7 @@ import AddJournalistIcon from "../icons/AddJournalistIcon";
 import HomeIcon from "../icons/HomeIcon";
 import touchIcon from "../../assets/touch-icon.png";
 import { NavLink, useLocation } from "react-router-dom";
+import Users from "../icons/Users";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -42,6 +43,17 @@ const Sidebar = () => {
                 }`}
               >
                 <AddJournalistIcon />
+              </li>
+            </NavLink>
+            <NavLink to={"/journalists"}>
+              <li
+                className={`sidebar__nav-item ${
+                  location.pathname === "/journalists"
+                    ? "sidebar__nav-item-active"
+                    : ""
+                }`}
+              >
+                <Users />
               </li>
             </NavLink>
           </ul>
