@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 
 import AuthContext, { AuthContextProvider } from "./store/auth-context";
+import Journalists from "./pages/Journalists";
 
 const App: FC = () => {
   const context = useContext(AuthContext);
@@ -16,6 +17,7 @@ const App: FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/add-articles" element={<AddArticle />} />
         <Route path="/add-journalists" element={<AddJournalist />} />
+        <Route path="/journalists" element={<Journalists />} />
       </Routes>
     </AuthContextProvider>
   );
