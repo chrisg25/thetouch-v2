@@ -1,0 +1,57 @@
+.journalists {
+  padding-left: 110px;
+  padding-top: 90px;
+
+  &__card {
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+    border: 2px solid $primary-clr;
+    position: relative;
+  }
+
+  &__actions-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: -10px;
+    top: -5px;
+  }
+
+  &__action {
+    background-color: none;
+    border: none;
+    width: 70px;
+    background-color: $accent-clr;
+    font-size: 12px;
+    padding-block: 4px;
+    padding-inline: 5px;
+    border-radius: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:not(:nth-of-type(1)) {
+      margin-top: 5px;
+    }
+
+    &--delete {
+      background-color: $red-100;
+    }
+  }
+
+  &__info {
+    position: absolute;
+    bottom: -50px;
+
+    h1 {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
