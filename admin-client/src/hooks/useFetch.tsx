@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function useFetch(url: string, method: string, body?: any) {
+export default function useFetch() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>();
   const [statusCode, setStatusCode] = useState<number | undefined>();
@@ -11,29 +11,34 @@ export default function useFetch(url: string, method: string, body?: any) {
     Authorization: `Bearer ${token}`,
   };
 
-  useEffect(() => {
-    (async function () {
-      try {
-        setIsLoading((prevState) => !prevState);
-        const response = await fetch(url, {
-          method: method.toUpperCase(),
-          headers,
-        });
-        const resData = await response.json();
-        setData(resData);
-        console.log(resData, "from custom hook");
-        setStatusCode(response.status);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading((prevState) => false);
-      }
-    })();
-  }, [url]);
+  const customFetch = async (url: string, method: string, body?: any) => {
+    try {
+      setIsLoading((prevState) => !prevState);
+      const response = await fetch(url, {
+        method: method.toUpperCase(),
+        headers,
+      });
 
+      setStatusCode(response.status);
+      console.log(response.status, "status code from hook");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading((prevState) => false);
+      return {
+        isLoading,
+        data,
+        statusCode,
+        customFetch,
+        clearState,
+      };
+    }
+  };
+
+  const clearState = () => {
+    setData(null);
+  };
   return {
-    isLoading,
-    data,
-    statusCode,
+    customFetch,
   };
 }
