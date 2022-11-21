@@ -2,7 +2,14 @@ import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/layout";
 import AuthContext from "../store/auth-context";
-import { JournalistType } from "../types";
+
+interface JournalistType {
+  first_name: string;
+  last_name: string;
+  course: string;
+  position: string;
+  photo: string;
+}
 
 const Journalists = () => {
   const authContext = useContext(AuthContext);
@@ -24,9 +31,9 @@ const Journalists = () => {
   useEffect(() => {
     const fetchdArticles = async () => {
       try {
-        const res = await fetch("http://localhost:5000/articles/pagination/0");
-        const data: JournalistType[] = await res.json();
-        setJournalists(() => [...data]);
+        const res = await fetch("http://localhost:5000/journalists");
+        const data = await res.json();
+        setJournalists(() => [...data] as typeof data);
       } catch (error) {
         setFetchError((prevErr) => !prevErr);
       }
@@ -37,18 +44,31 @@ const Journalists = () => {
   return (
     <Layout>
       <div className="journalists">
-        <div className="journalists__card">
-          <div className="journalists__actions-container">
-            <button className="journalists__action">Edit</button>
-            <button className="journalists__action journalists__action--delete">
-              Delete
-            </button>
-          </div>
-          <div className="journalists__info">
-            <h1>Rhyz Jovanni Arong</h1>
-            <p>Software Engineer</p>
-          </div>
-        </div>
+        {journalists.length >= 1
+          ? journalists.map((journalist) => {
+              return (
+                <div
+                  className="journalists__card"
+                  style={{
+                    backgroundImage: `url(${journalist.photo})`,
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                  }}
+                >
+                  <div className="journalists__actions-container">
+                    <button className="journalists__action">Edit</button>
+                    <button className="journalists__action journalists__action--delete">
+                      Delete
+                    </button>
+                  </div>
+                  <div className="journalists__info">
+                    <h1>{journalist.first_name}</h1>
+                    <p>{journalist.position}</p>
+                  </div>
+                </div>
+              );
+            })
+          : null}
       </div>
     </Layout>
   );
