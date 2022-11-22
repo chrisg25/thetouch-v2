@@ -2,8 +2,9 @@ import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/layout";
 import AuthContext from "../store/auth-context";
-
+import Spinner from "../components/spinner";
 interface JournalistType {
+  id?: number;
   first_name: string;
   last_name: string;
   course: string;
@@ -11,6 +12,7 @@ interface JournalistType {
   photo: string;
 }
 
+const TOKEN = localStorage.getItem("admin_token_tt");
 const Journalists = () => {
   const authContext = useContext(AuthContext);
   const [journalists, setJournalists] = useState<JournalistType[]>([]);
@@ -41,8 +43,72 @@ const Journalists = () => {
     fetchdArticles();
   }, []);
 
+  const onDeleteJournalist = async (articleId: number) => {
+    setToBeDeletedJournalist(articleId);
+    setShowModal((prevState) => !prevState);
+  };
+
+  const onConfirimedDeleteJournalist = async () => {
+    try {
+      setIsDeleting((prevState) => true);
+      await fetch(
+        `http://localhost:5000/journalists/${toBeDeletedJournalist}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${TOKEN}`,
+          },
+        }
+      );
+      setJournalists((prevState) =>
+        prevState.filter(
+          (journalist) => journalist.id !== toBeDeletedJournalist
+        )
+      );
+      setIsDeleting((prevState) => false);
+      setShowModal((prevState) => !prevState);
+    } catch (error) {
+      setFetchError((prevErr) => !prevErr);
+    }
+  };
+
+  const onCancelDeletion = () => {
+    setToBeDeletedJournalist(null);
+    setShowModal((prevState) => false);
+  };
+
   return (
     <Layout>
+      {showModal && (
+        <div className="backdrop">
+          <div className="prompt">
+            <h1 className="prompt__message">
+              Are you sure you want to delete this article?
+            </h1>
+            <div className="prompt__actions-container">
+              {!isDeleting ? (
+                <>
+                  <button
+                    className="prompt__action prompt__yes"
+                    onClick={() => onConfirimedDeleteJournalist()}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className="prompt__action prompt__no"
+                    onClick={() => onCancelDeletion()}
+                  >
+                    No
+                  </button>
+                </>
+              ) : (
+                <Spinner />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       <div className="journalists">
         {journalists.length >= 1
           ? journalists.map((journalist) => {
@@ -57,7 +123,12 @@ const Journalists = () => {
                 >
                   <div className="journalists__actions-container">
                     <button className="journalists__action">Edit</button>
-                    <button className="journalists__action journalists__action--delete">
+                    <button
+                      className="journalists__action journalists__action--delete"
+                      onClick={() =>
+                        onDeleteJournalist(journalist.id as number)
+                      }
+                    >
                       Delete
                     </button>
                   </div>
