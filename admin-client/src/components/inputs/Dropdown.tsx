@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 const dummyJournalists: Array<{ id: number; name: string }> = [
   {
-    id: 3,
+    id: 7,
     name: "Jane Doe",
   },
   {
-    id: 4,
+    id: 8,
     name: "John Doe",
   },
 ];
