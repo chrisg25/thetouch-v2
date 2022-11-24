@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../components/layout";
 import AuthContext from "../store/auth-context";
 import Spinner from "../components/spinner";
+import Backdrop from "../components/layout/Backdrop";
 interface JournalistType {
   id?: number;
   first_name: string;
@@ -84,39 +85,13 @@ const Journalists = () => {
     setShowModal((prevState) => false);
   };
 
-  const modal = showModal && (
-    <div className="backdrop">
-      <div className="prompt">
-        <h1 className="prompt__message">
-          Are you sure you want to delete this article?
-        </h1>
-        <div className="prompt__actions-container">
-          {!isDeleting ? (
-            <>
-              <button
-                className="prompt__action prompt__yes"
-                onClick={() => onConfirimedDeleteJournalist()}
-              >
-                Yes
-              </button>
-              <button
-                className="prompt__action prompt__no"
-                onClick={() => onCancelDeletion()}
-              >
-                No
-              </button>
-            </>
-          ) : (
-            <Spinner />
-          )}
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <Layout>
-      {modal}
+      <Backdrop
+        isLoading={isDeleting}
+        onCancel={onCancelDeletion}
+        onConfirm={onConfirimedDeleteJournalist}
+      />
       <div className="journalists">
         {journalists.length >= 1
           ? journalists.map((journalist) => {
