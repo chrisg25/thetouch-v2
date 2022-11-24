@@ -5,7 +5,7 @@ const dummyJournalists: Array<{ id: number; name: string }> = [
     name: "Jane Doe",
   },
   {
-    id: 8,
+    id: 9,
     name: "John Doe",
   },
 ];
