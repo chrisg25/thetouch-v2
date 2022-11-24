@@ -43,6 +43,12 @@ const Journalists = () => {
     fetchdArticles();
   }, []);
 
+  const onEditJournalists = (articleDetails: any) => {
+    navigate("/add-journalists", {
+      state: articleDetails,
+    });
+  };
+
   const onDeleteJournalist = async (articleId: number) => {
     setToBeDeletedJournalist(articleId);
     setShowModal((prevState) => !prevState);
@@ -78,37 +84,39 @@ const Journalists = () => {
     setShowModal((prevState) => false);
   };
 
+  const modal = showModal && (
+    <div className="backdrop">
+      <div className="prompt">
+        <h1 className="prompt__message">
+          Are you sure you want to delete this article?
+        </h1>
+        <div className="prompt__actions-container">
+          {!isDeleting ? (
+            <>
+              <button
+                className="prompt__action prompt__yes"
+                onClick={() => onConfirimedDeleteJournalist()}
+              >
+                Yes
+              </button>
+              <button
+                className="prompt__action prompt__no"
+                onClick={() => onCancelDeletion()}
+              >
+                No
+              </button>
+            </>
+          ) : (
+            <Spinner />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <Layout>
-      {showModal && (
-        <div className="backdrop">
-          <div className="prompt">
-            <h1 className="prompt__message">
-              Are you sure you want to delete this article?
-            </h1>
-            <div className="prompt__actions-container">
-              {!isDeleting ? (
-                <>
-                  <button
-                    className="prompt__action prompt__yes"
-                    onClick={() => onConfirimedDeleteJournalist()}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    className="prompt__action prompt__no"
-                    onClick={() => onCancelDeletion()}
-                  >
-                    No
-                  </button>
-                </>
-              ) : (
-                <Spinner />
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {modal}
       <div className="journalists">
         {journalists.length >= 1
           ? journalists.map((journalist) => {
@@ -122,7 +130,12 @@ const Journalists = () => {
                   }}
                 >
                   <div className="journalists__actions-container">
-                    <button className="journalists__action">Edit</button>
+                    <button
+                      className="journalists__action"
+                      onClick={() => onEditJournalists(journalist)}
+                    >
+                      Edit
+                    </button>
                     <button
                       className="journalists__action journalists__action--delete"
                       onClick={() =>

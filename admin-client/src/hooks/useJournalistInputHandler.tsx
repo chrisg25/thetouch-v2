@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { JournalistType, PhotoType } from "../types";
 import { v4 as uuid } from "uuid";
+import { useLocation } from "react-router-dom";
 
 const useJournalistInputHandler = () => {
   const [journalistDetails, setJournalistDetails] = useState<JournalistType>({
@@ -10,6 +11,15 @@ const useJournalistInputHandler = () => {
     position: "",
     photos: [] as PhotoType[],
   });
+  const { pathname, state } = useLocation();
+
+  useEffect(() => {
+    // Fetch Article Details to be edited
+    setJournalistDetails((prevState) => ({
+      ...prevState,
+      ...(state as JournalistType),
+    }));
+  }, [pathname, state]);
 
   const onInputChangeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
