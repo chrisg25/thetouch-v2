@@ -75,6 +75,7 @@ const CustomInput: FC<CustomInputProps> = ({
             value={value}
             onChange={onChange}
             onFocus={() => onRemoveError(inputName)}
+            autoComplete="off"
           />
         </label>
         {hasError && (
@@ -99,6 +100,7 @@ const CustomInput: FC<CustomInputProps> = ({
               onRemoveError(inputName);
               setShowDropdown((prevState) => true);
             }}
+            autoComplete="off"
           />
         </label>
         {hasError && (
@@ -127,6 +129,7 @@ const CustomInput: FC<CustomInputProps> = ({
               onHasCustomDateHandler?.();
               onClearDateTimeValues?.();
             }}
+            autoComplete="off"
           />
           Add custom date and time instead?
         </label>
@@ -143,6 +146,7 @@ const CustomInput: FC<CustomInputProps> = ({
                   value={dateValue}
                   onFocus={() => onRemoveError("date")}
                   style={{ display: "block" }}
+                  autoComplete="off"
                 />
               </label>
               {hasCustomDate &&
@@ -163,6 +167,7 @@ const CustomInput: FC<CustomInputProps> = ({
                   value={timeValue}
                   onFocus={() => onRemoveError("time")}
                   style={{ display: "block" }}
+                  autoComplete="off"
                 />
                 {hasCustomDate &&
                   errors.findIndex((err) => err.for === "time") > -1 && (
