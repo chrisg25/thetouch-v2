@@ -1,6 +1,7 @@
 .journalists {
   padding-left: 110px;
   padding-top: 90px;
+  display: flex;
 
   &__card {
     height: 200px;
@@ -8,6 +9,7 @@
     border-radius: 10px;
     border: 2px solid $primary-clr;
     position: relative;
+    margin-left: 30px;
   }
 
   &__actions-container {
