@@ -91,6 +91,7 @@ const Journalists = () => {
         isLoading={isDeleting}
         onCancel={onCancelDeletion}
         onConfirm={onConfirimedDeleteJournalist}
+        showModal={showModal}
       />
       <div className="journalists">
         {journalists.length >= 1
