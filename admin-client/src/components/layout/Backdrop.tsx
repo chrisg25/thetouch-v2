@@ -12,9 +12,8 @@ const Backdrop: FC<BackdropPropTypes> = ({
   onCancel,
   onConfirm,
   showModal,
+  isLoading,
 }) => {
-  const [loading, setLoading] = useState<boolean>(false);
-
   return (
     <>
       {showModal && (
@@ -24,7 +23,7 @@ const Backdrop: FC<BackdropPropTypes> = ({
               Are you sure you want to delete this article?
             </h1>
             <div className="prompt__actions-container">
-              {!loading ? (
+              {!isLoading ? (
                 <>
                   <button
                     className="prompt__action prompt__yes"
