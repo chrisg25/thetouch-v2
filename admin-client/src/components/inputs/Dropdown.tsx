@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 const dummyJournalists: Array<{ id: number; name: string }> = [
   {
     id: 7,
@@ -25,7 +25,30 @@ const Dropdown: FC<DropdownProps> = ({
   setShowDropdown,
   onSelectedItemHandler,
 }) => {
-  const filteredJournalist = dummyJournalists.filter((journalist) =>
+  const [journalists, setJournalists] = useState<
+    { id: number; name: string }[]
+  >([]);
+  useEffect(() => {
+    const fetchdArticles = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/journalists");
+        const data = await res.json();
+        console.log(data, "from drop");
+        setJournalists(
+          (prevJournalists) =>
+            data.map((journalist: typeof data) => ({
+              id: journalist.id,
+              name: `${journalist.first_name} ${journalist.last_name}`,
+            })) as typeof data
+        );
+      } catch (error) {
+        console.log(error, "fetch journalists error on dropdown");
+      }
+    };
+    fetchdArticles();
+  }, []);
+
+  const filteredJournalist = journalists.filter((journalist) =>
     journalist.name.toLowerCase().includes(value.toLowerCase())
   );
   return (
