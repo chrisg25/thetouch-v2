@@ -16,6 +16,7 @@ interface DropdownProps {
   showDropdown: boolean;
   setShowDropdown: () => void;
   onSelectedItemHandler?: (inputName: string, name: string, id: number) => void;
+  options: Array<{ id: number; name: string; position: string }>;
 }
 
 const Dropdown: FC<DropdownProps> = ({
@@ -24,30 +25,9 @@ const Dropdown: FC<DropdownProps> = ({
   showDropdown,
   setShowDropdown,
   onSelectedItemHandler,
+  options,
 }) => {
-  const [journalists, setJournalists] = useState<
-    { id: number; name: string }[]
-  >([]);
-  useEffect(() => {
-    const fetchdArticles = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/journalists");
-        const data = await res.json();
-        setJournalists(
-          (prevJournalists) =>
-            data.map((journalist: typeof data) => ({
-              id: journalist.id,
-              name: `${journalist.first_name} ${journalist.last_name}`,
-            })) as typeof data
-        );
-      } catch (error) {
-        console.log(error, "fetch journalists error on dropdown");
-      }
-    };
-    fetchdArticles();
-  }, []);
-
-  const filteredJournalist = journalists.filter((journalist) =>
+  const filteredJournalist = options.filter((journalist) =>
     journalist.name.toLowerCase().includes(value.toLowerCase())
   );
   return (
