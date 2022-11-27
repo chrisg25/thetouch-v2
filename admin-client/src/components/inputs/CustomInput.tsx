@@ -20,13 +20,13 @@ interface CustomInputProps {
   hasCustomDate?: boolean;
   errors: ErrorType[];
   singlePhoto?: boolean;
+  dropdownOptions?: Array<{ id: number; name: string; position: string }>;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onRemovePhoto?: (photoId: string) => void;
   onSelectedItemHandler?: (inputName: string, name: string, id: number) => void;
   onClearDateTimeValues?: () => void;
   onHasCustomDateHandler?: () => void;
   onRemoveError: (errorFor: string) => void;
-  dropdownOptions?: Array<{ id: number; name: string; position: string }>;
 }
 interface PhotoType {
   id: string;
@@ -99,8 +99,12 @@ const CustomInput: FC<CustomInputProps> = ({
             value={value}
             onChange={onChange}
             onFocus={() => {
-              onRemoveError(inputName);
-              setShowDropdown((prevState) => true);
+              if (showDropdown === true) {
+                setShowDropdown((prevState) => false);
+              } else {
+                onRemoveError(inputName);
+                setShowDropdown((prevState) => true);
+              }
             }}
             autoComplete="off"
           />
