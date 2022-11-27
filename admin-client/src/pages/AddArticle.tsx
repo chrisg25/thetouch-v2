@@ -8,6 +8,12 @@ import AuthContext from "../store/auth-context";
 import Layout from "../components/layout";
 import Spinner from "../components/spinner";
 
+interface Dropdown {
+  id: number;
+  name: string;
+  position: string;
+}
+
 const AddArticle = () => {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
@@ -27,10 +33,44 @@ const AddArticle = () => {
   } = useArticleInputHandler();
 
   const { errors, onErrorOccured, onRemoveError } = useErrorHandler();
-
   const [addingArticle, sestIsAddingArticle] = useState<boolean>(false);
   const [errorUploading, setErrorUploading] = useState<boolean>(false);
   const [successUploading, setSuccessUploading] = useState<boolean>(false);
+  const [graphicsByOptions, setGraphicsByOptions] = useState<Dropdown[]>([]);
+  const [authorOptions, setAuthorOptions] = useState<Dropdown[]>([]);
+
+  useEffect(() => {
+    const fetchdArticles = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/journalists");
+        const data = await res.json();
+        setGraphicsByOptions(
+          (prevJournalists) =>
+            data
+              .filter(
+                (journalist: typeof data) =>
+                  journalist.position === "Graphics Artist"
+              )
+              .map((journalist: typeof data) => ({
+                id: journalist.id,
+                name: `${journalist.first_name} ${journalist.last_name}`,
+                position: journalist.position,
+              })) as typeof data
+        );
+        setAuthorOptions(
+          (prevJournalists) =>
+            data.map((journalist: typeof data) => ({
+              id: journalist.id,
+              name: `${journalist.first_name} ${journalist.last_name}`,
+              position: journalist.position,
+            })) as typeof data
+        );
+      } catch (error) {
+        console.log(error, "fetch journalists error on dropdown");
+      }
+    };
+    fetchdArticles();
+  }, []);
 
   const inputValidator = (): boolean => {
     let isValidated = true;
@@ -157,6 +197,7 @@ const AddArticle = () => {
           onSelectedItemHandler={onSelectedItemHandler}
           errors={errors}
           onRemoveError={onRemoveError}
+          dropdownOptions={authorOptions}
         />
         <CustomInput
           value={articleDetails.graphics_by}
@@ -167,6 +208,7 @@ const AddArticle = () => {
           onSelectedItemHandler={onSelectedItemHandler}
           errors={errors}
           onRemoveError={onRemoveError}
+          dropdownOptions={graphicsByOptions}
         />
         <CustomInput
           onChange={onInputChangeHandler}

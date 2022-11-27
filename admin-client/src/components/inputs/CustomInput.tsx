@@ -26,6 +26,7 @@ interface CustomInputProps {
   onClearDateTimeValues?: () => void;
   onHasCustomDateHandler?: () => void;
   onRemoveError: (errorFor: string) => void;
+  dropdownOptions?: Array<{ id: number; name: string; position: string }>;
 }
 interface PhotoType {
   id: string;
@@ -48,6 +49,7 @@ const CustomInput: FC<CustomInputProps> = ({
   errors,
   hasCustomDate,
   singlePhoto = false,
+  dropdownOptions,
   onChange,
   onRemovePhoto,
   onSelectedItemHandler,
@@ -106,13 +108,16 @@ const CustomInput: FC<CustomInputProps> = ({
         {hasError && (
           <h1 className="add-articles__error-message">Field Required!</h1>
         )}
-        <Dropdown
-          inputName={inputName}
-          value={value as string}
-          showDropdown={showDropdown}
-          setShowDropdown={() => setShowDropdown((prevState) => !prevState)}
-          onSelectedItemHandler={onSelectedItemHandler}
-        />
+        {dropdownOptions !== undefined && (
+          <Dropdown
+            inputName={inputName}
+            value={value as string}
+            showDropdown={showDropdown}
+            setShowDropdown={() => setShowDropdown((prevState) => !prevState)}
+            onSelectedItemHandler={onSelectedItemHandler}
+            options={dropdownOptions}
+          />
+        )}
       </div>
     );
   }
