@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import logo from "../../public/logo.png";
 
 const Header = () => {
   const router = useRouter();
@@ -20,12 +21,7 @@ const Header = () => {
     <header className="header">
       <div className="header__banner">
         <div className="header__logo-container">
-          <Image
-            height={"100%"}
-            width={"100%"}
-            src="https://thetouchpublication.site/static/media/logo.a995b84f.png"
-            alt="Logo"
-          />
+          <Image height={"100%"} width={"100%"} src={logo} alt="Logo" />
         </div>
         <h1 className="header__banner-title">
           The Touch |{" "}
