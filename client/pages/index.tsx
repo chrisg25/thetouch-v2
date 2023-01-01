@@ -12,18 +12,21 @@ interface HomePageProps {
 const Home: NextPage<HomePageProps> = ({ pathname }) => {
   const data = [
     {
+      id: "1",
       backgroundImage:
         "https://res.cloudinary.com/rhyzschoolwebapp/image/upload/v1636900975/thetouchpub_article_banners/rwtfnhih1ftxaaplaaur.jpg",
       writer: "Lester Janito",
       headline: "NEWS | Pub renewal: Ex adviser Malongo speaks",
     },
     {
+      id: "2",
       backgroundImage:
         "https://res.cloudinary.com/rhyzschoolwebapp/image/upload/v1636901134/thetouchpub_article_banners/wqj4rzvy1tl8umjynm5b.jpg",
       writer: "Lester Janito",
       headline: "Feature | Elijah and his Series of Unfortunate Events",
     },
     {
+      id: "3",
       backgroundImage:
         "https://res.cloudinary.com/rhyzschoolwebapp/image/upload/v1636901157/thetouchpub_article_banners/nvjsswa2prwgv2kkqfr4.jpg",
       writer: "Lester Janito",
