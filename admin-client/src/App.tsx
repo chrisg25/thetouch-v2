@@ -15,8 +15,8 @@ const App: FC = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
-        <Route path="/add-articles" element={<AddArticle />} />
-        <Route path="/add-journalists" element={<AddJournalist />} />
+        <Route path="/article/:action" element={<AddArticle />} />
+        <Route path="/journalist/:action" element={<AddJournalist />} />
         <Route path="/journalists" element={<Journalists />} />
       </Routes>
     </AuthContextProvider>

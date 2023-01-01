@@ -44,7 +44,7 @@ const Home = () => {
   };
 
   const onEditArticle = (articleDetails: any) => {
-    navigate("/add-articles", {
+    navigate(`/article/edit`, {
       state: articleDetails,
     });
   };

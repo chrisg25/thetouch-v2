@@ -3,7 +3,7 @@ import CustomInput from "../components/inputs/CustomInput";
 import useArticleInputHandler from "../hooks/useArticleInputHandler";
 import useErrorHandler from "../hooks/useErrorHandler";
 import * as dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AuthContext from "../store/auth-context";
 import Layout from "../components/layout";
 import Spinner from "../components/spinner";
@@ -38,6 +38,8 @@ const AddArticle = () => {
   const [successUploading, setSuccessUploading] = useState<boolean>(false);
   const [graphicsByOptions, setGraphicsByOptions] = useState<Dropdown[]>([]);
   const [authorOptions, setAuthorOptions] = useState<Dropdown[]>([]);
+
+  const { action } = useParams();
 
   useEffect(() => {
     const fetchdArticles = async () => {

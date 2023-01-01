@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import CustomInput from "../components/inputs/CustomInput";
 import useErrorHandler from "../hooks/useErrorHandler";
 import useJournalistInputHandler from "../hooks/useJournalistInputHandler";
@@ -14,6 +14,8 @@ const AddJournalist: FC = () => {
   const [errorUploading, setErrorUploading] = useState<boolean>(false);
   const [successUploading, setSuccessUploading] = useState<boolean>(false);
   const [addingJournalist, setIsAddingJournalsit] = useState<boolean>(false);
+
+  const { action } = useParams();
 
   useEffect(() => {
     if (!context?.isLoggedIn) {
