@@ -13,8 +13,9 @@ const Header = () => {
       return pathname !== "/"
         ? pathname
             .replace("/", "")
-            .split("-")
-            .map((chr) => chr.charAt(0).toUpperCase() + chr.slice(1))
+            .split("/")
+            .reverse()
+            .map((str) => str[0].toUpperCase() + str.substring(1) + "")
             .join(" ")
         : "Home";
     });
