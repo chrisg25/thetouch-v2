@@ -9,53 +9,33 @@ import Users from "../icons/Users";
 const Sidebar = () => {
   const location = useLocation();
 
+  const linkDetails = [
+    { pathName: "/", icon: <HomeIcon /> },
+    { pathName: "/article/add", icon: <AddArticleIcon /> },
+    { pathName: "/journalist/add", icon: <AddJournalistIcon /> },
+    { pathName: "/journalists", icon: <Users /> },
+  ];
+
   const component =
     location.pathname !== "/login" ? (
       <div className="sidebar">
         <nav className="sidebar__nav">
           <ul>
-            <NavLink to={"/"}>
-              <li
-                className={`sidebar__nav-item ${
-                  location.pathname === "/" ? "sidebar__nav-item-active" : ""
-                }`}
-              >
-                <HomeIcon />
-              </li>
-            </NavLink>
-            <NavLink to={"/add-articles"}>
-              <li
-                className={`sidebar__nav-item ${
-                  location.pathname === "/add-articles"
-                    ? "sidebar__nav-item-active"
-                    : ""
-                }`}
-              >
-                <AddArticleIcon />
-              </li>
-            </NavLink>
-            <NavLink to={"/add-journalists"}>
-              <li
-                className={`sidebar__nav-item ${
-                  location.pathname === "/add-journalists"
-                    ? "sidebar__nav-item-active"
-                    : ""
-                }`}
-              >
-                <AddJournalistIcon />
-              </li>
-            </NavLink>
-            <NavLink to={"/journalists"}>
-              <li
-                className={`sidebar__nav-item ${
-                  location.pathname === "/journalists"
-                    ? "sidebar__nav-item-active"
-                    : ""
-                }`}
-              >
-                <Users />
-              </li>
-            </NavLink>
+            {linkDetails.map((link) => {
+              return (
+                <NavLink to={link.pathName}>
+                  <li
+                    className={`sidebar__nav-item ${
+                      location.pathname === link.pathName
+                        ? "sidebar__nav-item-active"
+                        : ""
+                    }`}
+                  >
+                    {link.icon}
+                  </li>
+                </NavLink>
+              );
+            })}
           </ul>
           <img src={touchIcon} alt="touch-icon" />
         </nav>
