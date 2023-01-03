@@ -11,8 +11,16 @@ const Sidebar = () => {
 
   const linkDetails = [
     { pathName: "/", icon: <HomeIcon /> },
-    { pathName: "/article/add", icon: <AddArticleIcon /> },
-    { pathName: "/journalist/add", icon: <AddJournalistIcon /> },
+    {
+      pathName: "/article/add",
+      pathName2: "/article/edit",
+      icon: <AddArticleIcon />,
+    },
+    {
+      pathName: "/journalist/add",
+      pathName2: "/journalist/edit",
+      icon: <AddJournalistIcon />,
+    },
     { pathName: "/journalists", icon: <Users /> },
   ];
 
@@ -23,10 +31,11 @@ const Sidebar = () => {
           <ul>
             {linkDetails.map((link) => {
               return (
-                <NavLink to={link.pathName}>
+                <NavLink to={link.pathName} key={link.pathName}>
                   <li
                     className={`sidebar__nav-item ${
-                      location.pathname === link.pathName
+                      location.pathname === link.pathName ||
+                      location.pathname === link.pathName2
                         ? "sidebar__nav-item-active"
                         : ""
                     }`}
