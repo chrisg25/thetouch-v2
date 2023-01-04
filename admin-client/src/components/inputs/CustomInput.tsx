@@ -22,7 +22,7 @@ interface CustomInputProps {
   singlePhoto?: boolean;
   dropdownOptions?: Array<{ id: number; name: string; position: string }>;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onRemovePhoto?: (photoId: string) => void;
+  onRemovePhoto?: (photoId: number) => void;
   onSelectedItemHandler?: (inputName: string, name: string, id: number) => void;
   onClearDateTimeValues?: () => void;
   onHasCustomDateHandler?: () => void;
@@ -204,7 +204,7 @@ const CustomInput: FC<CustomInputProps> = ({
                   <div
                     key={photo.id}
                     className="add-articles__delete-photo-icon"
-                    onClick={() => onRemovePhoto?.(photo.id)}
+                    onClick={() => onRemovePhoto?.(+photo.id)}
                   ></div>
                   <img src={photo.url} className="add-articles__photo" />
                 </div>
