@@ -3,7 +3,7 @@ import CustomInput from "../components/inputs/CustomInput";
 import useArticleInputHandler from "../hooks/useArticleInputHandler";
 import useErrorHandler from "../hooks/useErrorHandler";
 import * as dayjs from "dayjs";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import AuthContext from "../store/auth-context";
 import Layout from "../components/layout";
 import Spinner from "../components/spinner";
@@ -25,6 +25,9 @@ const AddArticle = () => {
   const {
     articleDetails,
     hasCustomDate,
+    removedPhotos,
+    addedPhotos,
+    hasDetailChanges,
     onInputChangeHandler,
     onRemovePhoto,
     onSelectedItemHandler,
@@ -40,6 +43,7 @@ const AddArticle = () => {
   const [authorOptions, setAuthorOptions] = useState<Dropdown[]>([]);
 
   const { action } = useParams();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchdArticles = async () => {
@@ -111,22 +115,22 @@ const AddArticle = () => {
     return isValidated;
   };
 
-  const addArticle = async () => {
+  const onAddArticle = async () => {
     const isValidated = inputValidator();
 
     if (isValidated) {
       let body = {
         ...articleDetails,
-      };
+      } as any;
       body = {
         ...articleDetails,
-        photos: articleDetails.photos.map((photo) => photo.url) as any,
+        photos: articleDetails.photos.map((photo: any) => photo.url) as any,
         createdAt: !hasCustomDate
           ? dayjs().format("YYYY-MM-DD hh:mm")
           : dayjs(`${articleDetails.date} ${articleDetails.time}`).format(
               "YYYY-MM-DD hh:mm"
             ),
-      };
+      } as any;
       delete body.date;
       delete body.time;
       const token = localStorage.getItem("admin_token_tt");
@@ -158,6 +162,64 @@ const AddArticle = () => {
       return;
     }
     sestIsAddingArticle((prevState) => false);
+  };
+
+  const onUpdateArticle = async () => {
+    if (!hasDetailChanges) {
+      console.log("triggered");
+      return;
+    } else {
+      const articleId = articleDetails.id;
+      const token = localStorage.getItem("admin_token_tt");
+
+      const currentArticleDetails: any = location.state;
+      let body = {};
+
+      for (const property in currentArticleDetails) {
+        if (
+          currentArticleDetails[property as keyof typeof location.state] !==
+          articleDetails[property as keyof typeof articleDetails]
+        ) {
+          body = {
+            ...body,
+            [`${property}`]:
+              articleDetails[property as keyof typeof location.state],
+          };
+        }
+      }
+      body = {
+        ...body,
+        addedPhotos,
+        removedPhotos,
+      };
+      try {
+        const response = await fetch(
+          `http://localhost:5000/articles${articleId}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(body),
+          }
+        );
+        console.log(body, "updated body");
+        if (response.status === 201) {
+          setErrorUploading((prevState) => false);
+        }
+        setTimeout(() => {
+          setSuccessUploading((prevState) => false);
+          onClearInputFields();
+        }, 4000);
+        setSuccessUploading((prevState) => true);
+      } catch (error) {
+        setTimeout(() => {
+          setErrorUploading((prevState) => false);
+        }, 4000);
+        setErrorUploading((prevState) => true);
+      }
+    }
   };
 
   return (
@@ -234,13 +296,20 @@ const AddArticle = () => {
           errors={errors}
           onRemoveError={onRemoveError}
         />
+        {action === "edit" &&
+        !hasDetailChanges &&
+        (addedPhotos.length === 0 || removedPhotos.length === 0) ? (
+          <p>No changes has been made</p>
+        ) : null}
         {!addingArticle ? (
           <>
             <button
               className="add-articles__button"
-              onClick={() => addArticle()}
+              onClick={() =>
+                action === "add" ? onAddArticle() : onUpdateArticle()
+              }
             >
-              Add Article
+              {action === "add" ? "Add Article" : "Update Article"}
             </button>
             <button
               className="add-articles__button"
