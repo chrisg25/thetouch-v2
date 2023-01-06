@@ -194,7 +194,7 @@ const AddArticle = () => {
       };
       try {
         const response = await fetch(
-          `http://localhost:5000/articles${articleId}`,
+          `http://localhost:5000/articles/${articleId}`,
           {
             method: "PATCH",
             headers: {
