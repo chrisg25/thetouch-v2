@@ -18,7 +18,9 @@ const useInputHandler = () => {
     time: "",
   });
   const [addedPhotos, setAddedPhotos] = useState<PhotoType[]>([]);
-  const [removedPhotos, setRemovedPhotos] = useState<Array<number>>([]);
+  const [removedPhotos, setRemovedPhotos] = useState<
+    Array<{ id: number; url: string }>
+  >([]);
   const [fetchError, setFetchError] = useState<boolean>(false);
   const [hasDetailChanges, setHasDetailChanges] = useState<boolean>(false);
 
@@ -113,13 +115,19 @@ const useInputHandler = () => {
   };
 
   // Removes a photo from articleDetails.photo
-  const onRemovePhoto = (photoId: number) => {
+  const onRemovePhoto = (photoId: string, url: string) => {
     setArticleDetails((prevState) => ({
       ...prevState,
-      photos: prevState.photos.filter((photo) => +photo.id !== photoId),
+      photos: prevState.photos.filter((photo) => photo.id !== photoId),
     }));
     if (params.action === "edit") {
-      setRemovedPhotos((prevState) => [...prevState, +photoId]);
+      setRemovedPhotos((prevState) => [
+        ...prevState,
+        {
+          id: +photoId,
+          url: url,
+        },
+      ]);
     }
   };
 
@@ -132,14 +140,6 @@ const useInputHandler = () => {
       ...prevState,
       [inputName]: name,
       [inputName.concat("_id")]: id,
-    }));
-  };
-
-  const onClearDateTimeValues = () => {
-    setArticleDetails((prevState) => ({
-      ...prevState,
-      date: "",
-      time: "",
     }));
   };
 
@@ -170,7 +170,7 @@ const useInputHandler = () => {
         currentArticleDetails[property as keyof typeof location.state] !==
         articleDetails[property as keyof typeof articleDetails]
       ) {
-        setHasDetailChanges((prevState) => !prevState);
+        setHasDetailChanges((prevState) => true);
       }
     }
   };
@@ -184,7 +184,6 @@ const useInputHandler = () => {
     onInputChangeHandler,
     onSelectedItemHandler,
     onRemovePhoto,
-    onClearDateTimeValues,
     onHasCustomDateHandler,
     onClearInputFields,
   };

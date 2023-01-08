@@ -165,6 +165,10 @@ const AddArticle = () => {
   };
 
   const onUpdateArticle = async () => {
+    console.log(removedPhotos, "removed Photos");
+    console.log(addedPhotos, "added Photos");
+    console.log(!hasDetailChanges, "has detail changes?");
+    console.log(articleDetails.photos, "article detail photos");
     if (!hasDetailChanges) {
       console.log("triggered");
       return;
@@ -189,8 +193,10 @@ const AddArticle = () => {
       }
       body = {
         ...body,
-        addedPhotos,
-        removedPhotos,
+        addedPhotos: addedPhotos.map((photo) => photo.url),
+        removedPhotos: removedPhotos
+          .filter((photo) => Number.isInteger(photo.id))
+          .map((photo) => ({ id: `${photo.id}`, url: photo.url })),
       };
       try {
         const response = await fetch(
@@ -225,6 +231,8 @@ const AddArticle = () => {
   return (
     <Layout>
       <div className="add-articles">
+        {/* {console.log(removedPhotos, "removed Photos")}
+        {console.log(addedPhotos, "added Photos")} */}
         <CustomInput
           value={articleDetails.category}
           onChange={onInputChangeHandler}
