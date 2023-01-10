@@ -33,6 +33,7 @@ export interface JournalistType {
 
 export interface ArticleContextType {
   articleDetails: ArticleType;
+  hasCustomDate: boolean;
   onInputChangeHandler: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;

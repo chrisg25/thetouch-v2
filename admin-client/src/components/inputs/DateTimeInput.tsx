@@ -2,12 +2,11 @@ import React, { useContext, useState } from "react";
 import ArticleContext from "../../store/article-context";
 
 const DateTimeInput = () => {
-  const [hasCustomDate, setHasCustomDate] = useState<boolean>(false);
   const articleContext = useContext(ArticleContext);
 
   const onClickCheckboxHandler = () => {
     // might add another function to clear date fields
-    setHasCustomDate((prevState) => !prevState);
+    articleContext?.onToggleHasCustomDateHandler();
   };
 
   return (
@@ -23,7 +22,7 @@ const DateTimeInput = () => {
         />
         Add custom date and time instead?
       </label>
-      {hasCustomDate && (
+      {articleContext?.hasCustomDate && (
         <>
           <div>
             <label className="add-articles__category-label" htmlFor="date">
