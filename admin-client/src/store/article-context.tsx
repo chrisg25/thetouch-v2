@@ -16,7 +16,7 @@ export const ArticleContextProvider: FC<{ children: any }> = ({ children }) => {
     date: "",
     time: "",
   });
-  const [articlePhotos, setArticlePhotos] = useState<PhotoType[]>();
+  const [articlePhotos, setArticlePhotos] = useState<Array<PhotoType>>([]);
   const [hasCustomDate, setHasCustomDate] = useState<boolean>(false);
 
   // For TextInput.tsx
@@ -47,17 +47,45 @@ export const ArticleContextProvider: FC<{ children: any }> = ({ children }) => {
     setHasCustomDate((prevState) => !prevState);
   };
 
-  // TO BE ADDED
-  // const onAddPhotos = (event: ChangeEvent<HTMLInputElement>) => {};
+  // For PhotoInpout.tsx
+  const onAddPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    const reader = new FileReader();
+    if (target.files !== null) {
+      reader.readAsDataURL(target.files[0]);
+      reader.onloadend = () => {
+        setArticlePhotos(
+          (prevState) =>
+            [
+              ...prevState,
+              {
+                id: uuid(),
+                url: reader.result,
+              },
+            ] as PhotoType[]
+        );
+      };
+    }
+  };
+
+  const onRemovePhoto = (id: string) => {
+    setArticlePhotos((prevState) => ({
+      ...prevState,
+      photos: prevState.filter((photo) => photo.id !== id),
+    }));
+  };
 
   return (
     <ArticleContext.Provider
       value={{
         articleDetails,
+        articlePhotos,
         hasCustomDate,
         onInputChangeHandler,
         onDropdownItemSelectedHandler,
         onToggleHasCustomDateHandler,
+        onAddPhoto,
+        onRemovePhoto,
       }}
     >
       {children}

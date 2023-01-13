@@ -34,6 +34,7 @@ export interface JournalistType {
 export interface ArticleContextType {
   articleDetails: ArticleType;
   hasCustomDate: boolean;
+  articlePhotos: PhotoType[];
   onInputChangeHandler: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -43,6 +44,8 @@ export interface ArticleContextType {
     id: number
   ) => void;
   onToggleHasCustomDateHandler: () => void;
+  onAddPhoto: (e: ChangeEvent<HTMLInputElement>) => void;
+  onRemovePhoto: (id: string) => void;
 }
 
 export interface TextInputPropType {
