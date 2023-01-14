@@ -69,10 +69,9 @@ export const ArticleContextProvider: FC<{ children: any }> = ({ children }) => {
   };
 
   const onRemovePhoto = (id: string) => {
-    setArticlePhotos((prevState) => ({
-      ...prevState,
-      photos: prevState.filter((photo) => photo.id !== id),
-    }));
+    setArticlePhotos((prevState) =>
+      prevState.filter((photo) => photo.id !== id)
+    );
   };
 
   return (
