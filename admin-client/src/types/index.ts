@@ -62,3 +62,8 @@ export interface DropdownOptionsType {
   name: string;
   position: string;
 }
+
+export interface PhotoInputPropType {
+  singlePhoto?: boolean;
+  inputName: string;
+}
