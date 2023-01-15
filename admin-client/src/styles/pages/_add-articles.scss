@@ -137,6 +137,7 @@
   &__single-photo-container {
     grid-column-start: 1;
     grid-column-end: 4;
+    position: relative;
   }
 
   &__single-photo-list-container {
