@@ -7,18 +7,21 @@ import Home from "./pages/Home";
 
 import AuthContext, { AuthContextProvider } from "./store/auth-context";
 import Journalists from "./pages/Journalists";
+import { ArticleContextProvider } from "./store/article-context";
 
 const App: FC = () => {
   const context = useContext(AuthContext);
   return (
     <AuthContextProvider>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/article/:action" element={<AddArticle />} />
-        <Route path="/journalist/:action" element={<AddJournalist />} />
-        <Route path="/journalists" element={<Journalists />} />
-      </Routes>
+      <ArticleContextProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/article/:action" element={<AddArticle />} />
+          <Route path="/journalist/:action" element={<AddJournalist />} />
+          <Route path="/journalists" element={<Journalists />} />
+        </Routes>
+      </ArticleContextProvider>
     </AuthContextProvider>
   );
 };
