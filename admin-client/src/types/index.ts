@@ -35,6 +35,7 @@ export interface ArticleContextType {
   articleDetails: ArticleType;
   hasCustomDate: boolean;
   articlePhotos: PhotoType[];
+  inputErrors: ErrorType[];
   onInputChangeHandler: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -46,6 +47,9 @@ export interface ArticleContextType {
   onToggleHasCustomDateHandler: () => void;
   onAddPhoto: (e: ChangeEvent<HTMLInputElement>) => void;
   onRemovePhoto: (id: string) => void;
+  onAddArticle: () => void;
+  onRemoveError: (errorFor: string) => void;
+  onErrorOccured: (errorDetails: ErrorType) => void;
 }
 
 export interface TextInputPropType {
