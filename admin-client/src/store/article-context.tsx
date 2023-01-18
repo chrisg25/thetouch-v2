@@ -6,7 +6,6 @@ import {
   PhotoType,
 } from "../types";
 import { v4 as uuid } from "uuid";
-import useErrorHandler from "../hooks/useErrorHandler";
 import dayjs from "dayjs";
 
 const ArticleContext = React.createContext<ArticleContextType | null>(null);
@@ -30,7 +29,14 @@ export const ArticleContextProvider: FC<{ children: any }> = ({ children }) => {
 
   // START - Input Related Methods
   const onErrorOccured = (errorDetails: ErrorType) => {
-    setInputErrors((prevState) => [...prevState, errorDetails]);
+    setInputErrors((prevState) => {
+      const idx = prevState.findIndex((errs) => errs.for === errorDetails.for);
+      if (idx > -1) {
+        return prevState;
+      } else {
+        return [...prevState, errorDetails];
+      }
+    });
   };
 
   const onRemoveError = (errorFor: string) => {
