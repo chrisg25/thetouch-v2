@@ -29,8 +29,6 @@ const DropwdownSelectInput: FC<DropdownSelectInputPropType> = ({
 
   return (
     <>
-      {console.log(inputName, "dropdown input name")}
-      {console.log(inputErrors, "input errors")}
       <label className="add-articles__category-label" htmlFor="category">
         {labelPlaceholder}
         <div>
