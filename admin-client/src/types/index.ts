@@ -55,7 +55,6 @@ export interface ArticleContextType {
 export interface TextInputPropType {
   labelPlaceholder: string;
   inputName: string;
-  hasError: boolean;
   isTextarea?: boolean;
 }
 
