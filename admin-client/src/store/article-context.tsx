@@ -26,8 +26,12 @@ export const ArticleContextProvider: FC<{ children: any }> = ({ children }) => {
   const [articlePhotos, setArticlePhotos] = useState<Array<PhotoType>>([]);
   const [hasCustomDate, setHasCustomDate] = useState<boolean>(false);
   const [inputErrors, setInputErrors] = useState<ErrorType[]>([]);
+  const [isSuccessfulUpload, setIsSuccessfulUpload] = useState<boolean>(false);
+  const [isAddingArticle, setIsAddingArticle] = useState<boolean>(false);
+  const [showUploadResultPrompt, setShowUploadResultPrompt] =
+    useState<boolean>(false);
 
-  // START - Input Related Methods
+  // START - Input Error Related Methods
   const onErrorOccured = (errorDetails: ErrorType) => {
     setInputErrors((prevState) => {
       const idx = prevState.findIndex((errs) => errs.for === errorDetails.for);
@@ -44,13 +48,12 @@ export const ArticleContextProvider: FC<{ children: any }> = ({ children }) => {
       ...prevErrors.filter((error) => error.for !== errorFor),
     ]);
   };
-  // END - Input Related Methods
+  // END - Input Error Related Methods
 
   const inputValidator = (): boolean => {
     let isValidated = true;
     for (const detail in articleDetails) {
       if (hasCustomDate && (detail === "time" || detail === "date")) {
-        console.log("triggered datetime?");
         if (articleDetails[detail]?.toString().trim() === "") {
           onErrorOccured({
             for: detail,
@@ -131,9 +134,60 @@ export const ArticleContextProvider: FC<{ children: any }> = ({ children }) => {
     );
   };
 
+  const onClearInputFields = () => {
+    setArticleDetails((prevDetails) => ({
+      ...prevDetails,
+      category: "",
+      headline: "",
+      body: "",
+      authored_by: "",
+      graphics_by: "",
+      date: "",
+      time: "",
+    }));
+  };
+
   const onAddArticle = async () => {
-    console.log("wtf");
+    const token = localStorage.getItem("admin_token_tt");
     const isValidated = inputValidator();
+    if (isValidated) {
+      let body = {
+        ...articleDetails,
+        photos: articlePhotos.map((photo) => photo.url),
+        createdAt: hasCustomDate
+          ? dayjs(`${articleDetails.date} ${articleDetails.time}`).format(
+              "YYYY-MM-DD hh:mm"
+            )
+          : dayjs().format("YYYY-MM-DD hh:mm"),
+      };
+      delete body.date;
+      delete body.time;
+      try {
+        setIsAddingArticle((prevState) => !prevState);
+        const response = await fetch("http://localhost:5000/articles", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(body),
+        });
+        if (response.status === 201) {
+          setIsSuccessfulUpload((prevState) => true);
+        }
+      } catch (error) {
+        setIsSuccessfulUpload((prevState) => false);
+      } finally {
+        setIsAddingArticle((prevState) => false);
+        setTimeout(() => {
+          setShowUploadResultPrompt((prevState) => !prevState);
+          onClearInputFields();
+        }, 4000);
+        setShowUploadResultPrompt((prevState) => !prevState);
+      }
+    } else {
+      return;
+    }
   };
 
   return (
@@ -143,7 +197,11 @@ export const ArticleContextProvider: FC<{ children: any }> = ({ children }) => {
         articlePhotos,
         hasCustomDate,
         inputErrors,
+        isSuccessfulUpload,
+        isAddingArticle,
+        showUploadResultPrompt,
         onInputChangeHandler,
+        onClearInputFields,
         onDropdownItemSelectedHandler,
         onToggleHasCustomDateHandler,
         onAddPhoto,
