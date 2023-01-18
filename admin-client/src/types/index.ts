@@ -14,8 +14,8 @@ export interface ArticleType {
   authored_by_id: number | undefined;
   graphics_by: string;
   graphics_by_id: number | undefined;
-  date: string;
-  time: string;
+  date?: string;
+  time?: string;
 }
 
 export interface ErrorType {
@@ -36,9 +36,13 @@ export interface ArticleContextType {
   hasCustomDate: boolean;
   articlePhotos: PhotoType[];
   inputErrors: ErrorType[];
+  isSuccessfulUpload: boolean;
+  isAddingArticle: boolean;
+  showUploadResultPrompt: boolean;
   onInputChangeHandler: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
+  onClearInputFields: () => void;
   onDropdownItemSelectedHandler: (
     inputName: string,
     name: string,
