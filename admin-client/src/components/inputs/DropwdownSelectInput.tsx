@@ -1,13 +1,15 @@
 import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
 import ArticleContext from "../../store/article-context";
-import { DropdownSelectInputPropType } from "../../types";
+import { DropdownSelectInputPropType, ErrorType } from "../../types";
 import { dummyJournalistsData as options } from "../../dummy-data";
+import InputErrorUI from "../UI/InputErrorUI";
 
 const DropwdownSelectInput: FC<DropdownSelectInputPropType> = ({
   labelPlaceholder,
   inputName,
 }) => {
   const articleContext = useContext(ArticleContext);
+  const inputErrors = articleContext?.inputErrors as ErrorType[];
   const [inputValue, setInputValue] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
@@ -27,6 +29,8 @@ const DropwdownSelectInput: FC<DropdownSelectInputPropType> = ({
 
   return (
     <>
+      {console.log(inputName, "dropdown input name")}
+      {console.log(inputErrors, "input errors")}
       <label className="add-articles__category-label" htmlFor="category">
         {labelPlaceholder}
         <div>
@@ -44,6 +48,9 @@ const DropwdownSelectInput: FC<DropdownSelectInputPropType> = ({
           />
         </div>
       </label>
+      {inputErrors?.findIndex((err) => err.for === inputName) > -1 && (
+        <InputErrorUI />
+      )}
       <ul className={`add-articles__graphics-artist`} hidden={!showDropdown}>
         {filteredJournalist.length >= 1 ? (
           filteredJournalist.map(({ id, name }) => (

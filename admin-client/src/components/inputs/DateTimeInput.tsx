@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import ArticleContext from "../../store/article-context";
+import InputErrorUI from "../UI/InputErrorUI";
+import { ErrorType } from "../../types/index";
 
 const DateTimeInput = () => {
   const articleContext = useContext(ArticleContext);
-
+  const inputErrors = articleContext?.inputErrors as ErrorType[];
   const onClickCheckboxHandler = () => {
     // might add another function to clear date fields
     articleContext?.onToggleHasCustomDateHandler();
@@ -33,15 +35,14 @@ const DateTimeInput = () => {
                 type="date"
                 onChange={articleContext?.onInputChangeHandler}
                 value={articleContext?.articleDetails.date}
-                // onFocus={() => onRemoveError("date")}
+                onFocus={() => articleContext?.onRemoveError("date")}
                 style={{ display: "block" }}
                 autoComplete="off"
               />
             </label>
-            {/* {hasCustomDate &&
-              errors.findIndex((err) => err.for === "date") > -1 && (
-                <h1 className="add-articles__error-message">Field Required!</h1>
-              )} */}
+            {inputErrors?.findIndex((err) => err.for === "date") > -1 && (
+              <InputErrorUI />
+            )}
           </div>
           <div>
             <label className="add-articles__category-label" htmlFor="time">
@@ -52,16 +53,13 @@ const DateTimeInput = () => {
                 className="add-articles__input-field"
                 onChange={articleContext?.onInputChangeHandler}
                 value={articleContext?.articleDetails.time}
-                // onFocus={() => onRemoveError("time")}
+                onFocus={() => articleContext?.onRemoveError("time")}
                 style={{ display: "block" }}
                 autoComplete="off"
               />
-              {/* {hasCustomDate &&
-                errors.findIndex((err) => err.for === "time") > -1 && (
-                  <h1 className="add-articles__error-message">
-                    Field Required!
-                  </h1>
-                )} */}
+              {inputErrors?.findIndex((err) => err.for === "date") > -1 && (
+                <InputErrorUI />
+              )}
             </label>
           </div>
         </>

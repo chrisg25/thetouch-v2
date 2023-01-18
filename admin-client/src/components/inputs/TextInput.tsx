@@ -1,15 +1,15 @@
 import React, { ChangeEvent, FC, useContext, useEffect } from "react";
 import ArticleContext from "../../store/article-context";
-import { TextInputPropType } from "../../types";
+import { ErrorType, TextInputPropType } from "../../types";
+import InputErrorUI from "../UI/InputErrorUI";
 
 const TextInput: FC<TextInputPropType> = ({
   labelPlaceholder,
   inputName,
-  hasError,
   isTextarea = false,
 }) => {
   const articleContext = useContext(ArticleContext);
-
+  const inputErrors = articleContext?.inputErrors as ErrorType[];
   // conditionally store an input type if it's a textarea or not
   const inputComponent = isTextarea ? (
     <textarea
@@ -46,8 +46,8 @@ const TextInput: FC<TextInputPropType> = ({
         {labelPlaceholder}
         {inputComponent}
       </label>
-      {hasError && (
-        <h1 className="add-articles__error-message">Field Required!</h1>
+      {inputErrors?.findIndex((err) => err.for === inputName) > -1 && (
+        <InputErrorUI />
       )}
     </>
   );
